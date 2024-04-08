@@ -24,7 +24,7 @@ type
 
   TPerson = record
     Size: integer;
-    Centre: TPoint;
+    Center: TPoint;
     LegLeft, LegRight: TThreePoints;
     ArmLeft, ArmRight: TThreePoints;
     Body: TTwoPoints;
@@ -46,24 +46,48 @@ var
   NewPerson: TPerson;
 begin
   NewPerson.Size := Size;
-  NewPerson.Centre.X := X;
-  NewPerson.Centre.Y := Y;
+  NewPerson.Center.X := X;
+  NewPerson.Center.Y := Y;
+
+  Result := NewPerson;
 end;
 
-function PersonFirstFrame(const CurrPerson: TPerson): TPerson;
+procedure PersonFirstFrame(const CurrPerson: TPerson);
 begin
+  with CurrPerson, Center do
+  begin
+    Head.Create(X - Size, Y - 3 * Size, X + Size, Y - 1 * Size);
+    Body[1].Create(X, Y - Size);
+    Body[2].Create(X, Y + 2 * Size);
 
+    ArmLeft[1].Create(X, Y);
+    ArmLeft[2].Create(X - Size, Y);
+    ArmLeft[3].Create(X - trunc(1.5 * Size), Y - Size);
+
+    ArmRight[1].Create(X, Y);
+    ArmRight[2].Create(X + Size, Y);
+    ArmRight[3].Create(X + trunc(1.5 * Size), Y - Size);
+
+    LegLeft[1].Create(X, Y + 2 * Size);
+    LegLeft[2].Create(X - Size, Y + 3 * Size);
+    LegLeft[3].Create(X - Size, Y + 4 * Size);
+
+    LegRight[1].Create(X, Y + 2 * Size);
+    LegRight[2].Create(X + Size, Y + 3 * Size);
+    LegRight[3].Create(X + Size, Y + 4 * Size);
+  end;
 end;
 
 procedure DrawPerson(const PersonToDraw: TPerson);
 begin
   with Form1.Canvas do
   begin
-    Polyline(PersonToDraw.LegLeft);
-    Polyline(PersonToDraw.LegRight);
-    Polyline(PersonToDraw.ArmLeft);
-    Polyline(PersonToDraw.ArmRight);
-    Polyline(PersonToDraw.Body);
+    Pen.Width := 5;
+    PolyLine(PersonToDraw.LegLeft);
+    PolyLine(PersonToDraw.LegRight);
+    PolyLine(PersonToDraw.ArmLeft);
+    PolyLine(PersonToDraw.ArmRight);
+    PolyLine(PersonToDraw.Body);
     Ellipse(PersonToDraw.Head);
   end;
 
@@ -72,7 +96,7 @@ end;
 procedure TForm1.Button1Click(Sender: TObject);
 begin
   FirstPerson := ConstructorPerson(StrToInt(Edit1.Text), StrToInt(Edit2.Text), StrToInt(Edit3.Text));
-  FirstPerson := PersonFirstFrame(FirstPerson);
+  PersonFirstFrame(FirstPerson);
   DrawPerson(FirstPerson);
 end;
 

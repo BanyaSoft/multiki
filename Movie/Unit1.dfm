@@ -26,7 +26,7 @@ object Form1: TForm1
     Width = 121
     Height = 23
     TabOrder = 1
-    Text = 'Edit1'
+    Text = '100'
   end
   object Edit2: TEdit
     Left = 472
@@ -34,7 +34,7 @@ object Form1: TForm1
     Width = 121
     Height = 23
     TabOrder = 2
-    Text = 'Edit2'
+    Text = '100'
   end
   object Edit3: TEdit
     Left = 472
@@ -42,6 +42,6 @@ object Form1: TForm1
     Width = 121
     Height = 23
     TabOrder = 3
-    Text = 'Edit3'
+    Text = '10'
   end
 end
