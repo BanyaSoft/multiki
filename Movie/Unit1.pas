@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls;
 
 type
   TForm1 = class(TForm)
@@ -12,7 +12,9 @@ type
     Edit1: TEdit;
     Edit2: TEdit;
     Edit3: TEdit;
+    Timer1: TTimer;
     procedure Button1Click(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
   private
     { Private declarations }
   public
@@ -98,6 +100,19 @@ begin
   FirstPerson := ConstructorPerson(StrToInt(Edit1.Text), StrToInt(Edit2.Text), StrToInt(Edit3.Text));
   PersonFirstFrame(FirstPerson);
   DrawPerson(FirstPerson);
+  Timer1.Enabled := True;
+  Timer1.Interval := 30;
+end;
+
+procedure TForm1.Timer1Timer(Sender: TObject);
+begin
+  Form1.Canvas.Pen.Mode := pmNotXor;
+  DrawPerson(FirstPerson);
+  with FirstPerson do
+    FirstPerson := ConstructorPerson(Center.X + 10, Center.Y + 10, Size + 1);
+  PersonFirstFrame(FirstPerson);
+  DrawPerson(FirstPerson);
+
 end;
 
 end.
