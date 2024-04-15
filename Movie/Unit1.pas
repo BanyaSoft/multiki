@@ -3,7 +3,8 @@ unit Unit1;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls;
 
 type
@@ -54,77 +55,108 @@ var
 
 procedure DrawBackground();
 begin
-    Form1.Canvas.Pen.Width := 3;
-
-    Form1.Canvas.MoveTo(400, 25);
-    Form1.Canvas.LineTo(100, 680);
-    Form1.Canvas.MoveTo(800, 25);
-    Form1.Canvas.LineTo(1100, 680);
-    Form1.Canvas.Rectangle(60, 500, 100, 680);
-    Form1.Canvas.Rectangle(1100, 500, 1140, 680);
-    Form1.Canvas.Rectangle(60, 540, 1140, 640);
+  with Form1.Canvas do
+  begin
+    Pen.Width := 3;
+    MoveTo(400, 25);
+    LineTo(100, 680);
+    MoveTo(800, 25);
+    LineTo(1100, 680);
+    Rectangle(60, 500, 100, 680);
+    Rectangle(1100, 500, 1140, 680);
+    Rectangle(60, 540, 1140, 640);
+  end;
 end;
 
-function ConstructorPerson(const X, Y, Size: integer): TPerson;
+procedure DrawChristmasTree(x, y: integer); // TODO
+begin
+end;
+
+procedure DrawSnowMan(x, y: integer); // (x,y) head top center
+begin
+  with Form1.Canvas do
+  begin
+    Pen.Color := clAqua;
+    Brush.Color := clCream;
+    Ellipse(x - 100, y + 150, x + 100, y + 350);
+    Ellipse(x - 70, y + 50, x + 70, y + 160);
+    Ellipse(x - 30, y, x + 30, y + 50);
+    Pen.Color := clred;
+    Brush.Color := clred;
+    Pen.Width := 5;
+    Ellipse(x - 15, y + 12, x - 13, y + 15);
+    Ellipse(x + 15, y + 12, x + 13, y + 15);
+    Pen.Width := 3;
+    Pen.Color := clblue;
+    Brush.Color := clGradientActiveCaption;
+    Rectangle(x - 20, y - 20, x + 20, y + 6);
+    MoveTo(x - 50, y + 70);
+    LineTo(x - 150, y + 30);
+    MoveTo(x + 50, y + 70);
+    LineTo(x + 150, y + 30);
+  end;
+end;
+
+function ConstructorPerson(const x, y, Size: integer): TPerson;
 var
   NewPerson: TPerson;
 begin
   NewPerson.Size := Size;
-  NewPerson.Center.X := X;
-  NewPerson.Center.Y := Y;
+  NewPerson.Center.x := x;
+  NewPerson.Center.y := y;
 
   Result := NewPerson;
 end;
 
-procedure PersonFirstFrame(const CurrPerson: TPerson);
+procedure PersonFirstFrame(const currPerson: TPerson);
 begin
-  with CurrPerson, Center do
+  with currPerson, Center do
   begin
-    Head.Create(X - Size, Y - 3 * Size, X + Size, Y - 1 * Size);
-    Body[1].Create(X, Y - Size);
-    Body[2].Create(X, Y + 2 * Size);
+    Head.Create(x - Size, y - 3 * Size, x + Size, y - 1 * Size);
+    Body[1].Create(x, y - Size);
+    Body[2].Create(x, y + 2 * Size);
 
-    ArmLeft[1].Create(X, Y);
-    ArmLeft[2].Create(X - Size, Y-size);
-    ArmLeft[3].Create(X - trunc(1.5 * Size), Y - 2*Size);
+    ArmLeft[1].Create(x, y);
+    ArmLeft[2].Create(x - Size, y - Size);
+    ArmLeft[3].Create(x - trunc(1.5 * Size), y - 2 * Size);
 
-    ArmRight[1].Create(X, Y);
-    ArmRight[2].Create(X + Size, Y-size);
-    ArmRight[3].Create(X + trunc(1.5 * Size), Y - 2*Size);
+    ArmRight[1].Create(x, y);
+    ArmRight[2].Create(x + Size, y - Size);
+    ArmRight[3].Create(x + trunc(1.5 * Size), y - 2 * Size);
 
-    LegLeft[1].Create(X, Y + 2 * Size);
-    LegLeft[2].Create(X - Size, Y + 3 * Size);
-    LegLeft[3].Create(X - Size, Y + 4 * Size);
+    LegLeft[1].Create(x, y + 2 * Size);
+    LegLeft[2].Create(x - Size, y + 3 * Size);
+    LegLeft[3].Create(x - Size, y + 4 * Size);
 
-    LegRight[1].Create(X, Y + 2 * Size);
-    LegRight[2].Create(X + Size, Y + 3 * Size);
-    LegRight[3].Create(X + Size, Y + 4 * Size);
+    LegRight[1].Create(x, y + 2 * Size);
+    LegRight[2].Create(x + Size, y + 3 * Size);
+    LegRight[3].Create(x + Size, y + 4 * Size);
   end;
 end;
 
-procedure PersonSecondFrame(const CurrPerson: TPerson);
+procedure PersonSecondFrame(const currPerson: TPerson);
 begin
-  with CurrPerson, Center do
+  with currPerson, Center do
   begin
-    Head.Create(X - Size, Y - 3 * Size, X + Size, Y - 1 * Size);
-    Body[1].Create(X, Y - Size);
-    Body[2].Create(X, Y + 2 * Size);
+    Head.Create(x - Size, y - 3 * Size, x + Size, y - 1 * Size);
+    Body[1].Create(x, y - Size);
+    Body[2].Create(x, y + 2 * Size);
 
-    ArmLeft[1].Create(X, Y);
-    ArmLeft[2].Create(X - Size, Y+size);
-    ArmLeft[3].Create(X - trunc(1.5 * Size), Y + 2 * Size);
+    ArmLeft[1].Create(x, y);
+    ArmLeft[2].Create(x - Size, y + Size);
+    ArmLeft[3].Create(x - trunc(1.5 * Size), y + 2 * Size);
 
-    ArmRight[1].Create(X, Y);
-    ArmRight[2].Create(X + Size, Y+size);
-    ArmRight[3].Create(X + trunc(1.5 * Size), Y+2*Size);
+    ArmRight[1].Create(x, y);
+    ArmRight[2].Create(x + Size, y + Size);
+    ArmRight[3].Create(x + trunc(1.5 * Size), y + 2 * Size);
 
-    LegLeft[1].Create(X, Y + 2 * Size);
-    LegLeft[2].Create(X - Size, Y + 3 * Size);
-    LegLeft[3].Create(X - Size, Y + 4 * Size);
+    LegLeft[1].Create(x, y + 2 * Size);
+    LegLeft[2].Create(x - Size, y + 3 * Size);
+    LegLeft[3].Create(x - Size, y + 4 * Size);
 
-    LegRight[1].Create(X, Y + 2 * Size);
-    LegRight[2].Create(X + Size, Y + 3 * Size);
-    LegRight[3].Create(X + Size, Y + 4 * Size);
+    LegRight[1].Create(x, y + 2 * Size);
+    LegRight[2].Create(x + Size, y + 3 * Size);
+    LegRight[3].Create(x + Size, y + 4 * Size);
   end;
 end;
 
@@ -132,6 +164,8 @@ procedure DrawPerson(const PersonToDraw: TPerson);
 begin
   with Form1.Canvas do
   begin
+    Pen.Color := clWebDarkOrchid;
+    Brush.Color := clWhite;
     Pen.Width := 5;
     PolyLine(PersonToDraw.LegLeft);
     PolyLine(PersonToDraw.LegRight);
@@ -146,7 +180,8 @@ end;
 procedure TForm1.Button1Click(Sender: TObject);
 begin
   currFrame := 0;
-  FirstPerson := ConstructorPerson(StrToInt(Edit1.Text), StrToInt(Edit2.Text), StrToInt(Edit3.Text));
+  FirstPerson := ConstructorPerson(StrToInt(Edit1.Text), StrToInt(Edit2.Text),
+    StrToInt(Edit3.Text));
   PersonFirstFrame(FirstPerson);
   DrawPerson(FirstPerson);
 
@@ -157,23 +192,26 @@ end;
 
 procedure TForm1.Button2Click(Sender: TObject);
 begin
-    DrawBackground();
+  DrawBackground();
+  DrawChristmasTree(300, 50);
+  DrawSnowMan(1100, 50);
+  Button2.Enabled := false; // Button is not clickable more after frist click
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-    framesCount := 30;
-    currFrame := 0;
+  framesCount := 30;
+  currFrame := 0;
 
-    SetLength(cartoon, framesCount);
+  SetLength(cartoon, framesCount);
 
-    for var i := Low(cartoon) to High(cartoon) do
-    begin
-        if (i mod 2 = 0) then
-            cartoon[i] := PersonFirstFrame
-        else
-            cartoon[i] := PersonSecondFrame;
-    end;
+  for var i := Low(cartoon) to High(cartoon) do
+  begin
+    if (i mod 2 = 0) then
+      cartoon[i] := PersonFirstFrame
+    else
+      cartoon[i] := PersonSecondFrame;
+  end;
 
 end;
 
@@ -182,9 +220,9 @@ begin
   Form1.Canvas.Pen.Mode := pmNotXor;
   DrawPerson(FirstPerson);
   with FirstPerson do
-    FirstPerson := ConstructorPerson(Center.X + 5, Center.Y + 10, Size + 1);
+    FirstPerson := ConstructorPerson(Center.x + 5, Center.y + 10, Size + 1);
 
-  if currFrame >= framesCount-1 then
+  if currFrame >= framesCount - 1 then
     Timer1.Enabled := false
   else
   begin
