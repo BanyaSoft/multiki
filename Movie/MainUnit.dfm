@@ -13,7 +13,7 @@ object Form1: TForm1
   Font.Style = []
   OnCreate = FormCreate
   TextHeight = 15
-  object Button1: TButton
+  object btnSpawnStick: TButton
     Left = 1080
     Top = 205
     Width = 75
