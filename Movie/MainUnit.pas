@@ -14,10 +14,10 @@ type
         Edit2: TEdit;
         Edit3: TEdit;
         Timer1: TTimer;
-        Button2: TButton;
+    btnBackgroundTrack: TButton;
         btnPedestal: TButton;
         procedure Button1Click(Sender: TObject);
-        procedure Button2Click(Sender: TObject);
+        procedure btnBackgroundTrackClick(Sender: TObject);
         procedure Timer1Timer(Sender: TObject);
         procedure FormCreate(Sender: TObject);
         procedure btnPedestalClick(Sender: TObject);
@@ -495,7 +495,7 @@ begin
 
 end;
 
-procedure TForm1.Button2Click(Sender: TObject);
+procedure TForm1.btnBackgroundTrackClick(Sender: TObject);
 begin
     DrawFirstBackground();
 
@@ -503,7 +503,7 @@ begin
 
     DrawChristmasTree(400, 400, 1);
     DrawSnowMan(1100, 50);
-    Button2.Enabled := false; // Button is not clickable more after frist click
+    btnBackgroundTrack.Enabled := false; // Button is not clickable more after frist click
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);

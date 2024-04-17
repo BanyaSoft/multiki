@@ -46,14 +46,15 @@ object Form1: TForm1
     TabOrder = 3
     Text = '20'
   end
-  object Button2: TButton
+  object btnBackgroundTrack: TButton
     Left = 1080
     Top = 245
     Width = 75
     Height = 25
-    Caption = 'Button2'
+    Caption = 'Background'
+    DisabledImageName = 'btnBackgroundTrack'
     TabOrder = 4
-    OnClick = Button2Click
+    OnClick = btnBackgroundTrackClick
   end
   object btnPedestal: TButton
     Left = 1080
