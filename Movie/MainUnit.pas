@@ -9,6 +9,7 @@ uses
   DataTypes, AudioRoutine;
 
 type
+<<<<<<< HEAD
   TMainForm = class(TForm)
     Edit1: TEdit;
     Edit2: TEdit;
@@ -28,6 +29,48 @@ type
   public
     { Public declarations }
   end;
+=======
+    TForm1 = class(TForm)
+        Edit1: TEdit;
+        Edit2: TEdit;
+        Edit3: TEdit;
+        Timer1: TTimer;
+        btnBackgroundTrack: TButton;
+        btnPedestal: TButton;
+        btnFinishFence: TButton;
+        procedure Button1Click(Sender: TObject);
+        procedure btnBackgroundTrackClick(Sender: TObject);
+        procedure Timer1Timer(Sender: TObject);
+        procedure FormCreate(Sender: TObject);
+        procedure btnPedestalClick(Sender: TObject);
+        procedure btnFinishFenceClick(Sender: TObject);
+    private
+        { Private declarations }
+    public
+        { Public declarations }
+    end;
+
+    TThreePoints = array [1 .. 3] of TPoint;
+    TTwoPoints = array [1 .. 2] of TPoint;
+    TPolygon = array of TPoint;
+
+    TPerson = record
+        Size: integer;
+        Center: TPoint;
+        LegLeft, LegRight: TThreePoints;
+        ArmLeft, ArmRight: TThreePoints;
+        Body: TThreePoints;
+        Head: TRect;
+    end;
+
+    TEquipment = record
+        SnowShoeLeft, SnowShoeRight: TTwoPoints;
+        SnowStickLeft, SnowStickRight: TTwoPoints;
+    end;
+
+    TFrame = procedure(const currPerson: TPerson);
+    TFrames = array of TFrame;
+>>>>>>> main
 
 var
   MainForm: TMainForm;
@@ -225,6 +268,7 @@ begin
 
 end;
 
+<<<<<<< HEAD
 procedure PersonFirstFrame(var currPerson: TPerson);
 begin
   with currPerson, Center do
@@ -526,11 +570,105 @@ end;
 {*****************************************************************************************************}
 
 function ConstructorEquip(const currPerson: TPerson): TEquipment;
+=======
+procedure DrawLittleFlag(x, y, Size: integer);
+begin
+    with Form1.Canvas do
+    begin
+        MoveTo(x, y + size);
+        LineTo(x, y);
+        LineTo(x+size div 2, y+size div 4);
+        LineTo(x, y + size div 3);
+    end;
+
+end;
+
+procedure TForm1.btnFinishFenceClick(Sender: TObject);
+var
+    i, lenUnit: integer;
+    currX: integer;
+    currY: integer;
+begin
+    with Form1.Canvas do
+    begin
+        Pen.Width := 2;
+        Pen.Mode := pmCopy;
+        Brush.Color := clBtnFace;
+        lenUnit := ClientWidth div 100;
+
+        Form1.Canvas.Rectangle(GlobalX, GlobalY, ClientWidth - GlobalX,
+          ClientHeight - GlobalY);
+
+        MoveTo(GlobalX + lenUnit, ClientHeight - GlobalY - lenUnit * 20);
+        LineTo(GlobalX + lenUnit * 90, ClientHeight - GlobalY - lenUnit * 10);
+        LineTo(GlobalX + lenUnit * 90, ClientHeight - GlobalY - lenUnit * 2);
+        LineTo(GlobalX + lenUnit, ClientHeight - GlobalY - lenUnit * 12);
+        LineTo(GlobalX + lenUnit, ClientHeight - GlobalY - lenUnit * 20);
+
+        MoveTo(GlobalX + lenUnit, ClientHeight - GlobalY - lenUnit * 45);
+        LineTo(GlobalX + lenUnit * 90, ClientHeight - GlobalY - lenUnit * 35);
+        LineTo(GlobalX + lenUnit * 90, ClientHeight - GlobalY - lenUnit * 27);
+        LineTo(GlobalX + lenUnit, ClientHeight - GlobalY - lenUnit * 37);
+        LineTo(GlobalX + lenUnit, ClientHeight - GlobalY - lenUnit * 45);
+
+        currX := GlobalX + lenUnit;
+        currY := ClientHeight - GlobalY - lenUnit * 45;
+
+        for i := 1 to 30 do
+        begin
+            if i mod 5 = 0 then
+                currY := currY + 1;
+
+            LineTo(currX, currY + 8 * lenUnit);
+            currX := currX + 3 * lenUnit;
+            currY := currY + trunc(3 * lenUnit / 8.9);
+            MoveTo(currX, currY);
+        end;
+
+        currX := GlobalX + lenUnit;
+        currY := ClientHeight - GlobalY - lenUnit * 20;
+        MoveTo(currX, currY);
+
+        for i := 1 to 30 do
+        begin
+            if i mod 5 = 0 then
+                currY := currY + 1;
+
+            LineTo(currX, currY + 8 * lenUnit);
+            currX := currX + 3 * lenUnit;
+            currY := currY + trunc(3 * lenUnit / 8.9);
+            MoveTo(currX, currY);
+        end;
+
+        DrawLittleFlag(GlobalX+lenUnit, ClientHeight-GlobalY-5*lenUnit-75, 75);
+        DrawLittleFlag(GlobalX+12*lenUnit, ClientHeight-GlobalY-4*lenUnit-75, 75);
+        DrawLittleFlag(GlobalX+24*lenUnit, ClientHeight-GlobalY-3*lenUnit-75, 75);
+        DrawLittleFlag(GlobalX+36*lenUnit, ClientHeight-GlobalY-2*lenUnit-75, 75);
+        DrawLittleFlag(GlobalX+48*lenUnit, ClientHeight-GlobalY-1*lenUnit-75, 75);
+
+        DrawLittleFlag(GlobalX+50*lenUnit, GlobalY+5*lenUnit-75, 75);
+        DrawLittleFlag(GlobalX+62*lenUnit, GlobalY+6*lenUnit-75, 75);
+        DrawLittleFlag(GlobalX+74*lenUnit, GlobalY+7*lenUnit-75, 75);
+        DrawLittleFlag(GlobalX+86*lenUnit, GlobalY+8*lenUnit-75, 75);
+
+        Brush.Color := clBlack;
+        Pen.Width := 4;
+        MoveTo(GlobalX + 80*lenUnit, GlobalY + 17 * lenUnit);
+        LineTo(GlobalX + 70*lenUnit, GlobalY + 33 * lenUnit-5);
+        MoveTo(GlobalX + 85*lenUnit, GlobalY + 18 * lenUnit-6);
+        LineTo(GlobalX + 75*lenUnit, GlobalY + 34 * lenUnit-11);
+        Pen.Width := 2;
+    end;
+end;
+
+procedure TForm1.btnPedestalClick(Sender: TObject);
+>>>>>>> main
 var
   NewEquipment: TEquipment;
 begin
   NewEquipment.Size := currPerson.Size;
 
+<<<<<<< HEAD
   NewEquipment.SnowShoeLeft[2] := currPerson.LegLeft[3];
   NewEquipment.SnowShoeRight[2] := currPerson.LegRight[3];
 
@@ -553,6 +691,25 @@ begin
     PolyLine(EquipToDraw.SnowStickLeft);
     PolyLine(EquipToDraw.SnowStickRight);
   end;
+=======
+        Form1.Canvas.Rectangle(GlobalX, GlobalY, ClientWidth - GlobalX,
+          ClientHeight - GlobalY);
+
+        Form1.Canvas.Rectangle(GlobalX + 10 * lenUnit, LengthY - GlobalY * 3,
+          GlobalX + 30 * lenUnit, ClientHeight - GlobalY);
+        Form1.Canvas.Rectangle(GlobalX + 30 * lenUnit, LengthY - GlobalY * 5,
+          GlobalX + 50 * lenUnit, ClientHeight - GlobalY);
+        Form1.Canvas.Rectangle(GlobalX + 50 * lenUnit, LengthY - GlobalY * 4 +
+          50, GlobalX + 70 * lenUnit, ClientHeight - GlobalY);
+
+        MoveTo(GlobalX + lenUnit * 80, ClientHeight - GlobalY);
+        LineTo(GlobalX + lenUnit * 80, ClientHeight - 6 * GlobalY);
+        Brush.Color := clblue;
+        Rectangle(GlobalX + lenUnit * 80, ClientHeight - 6 * GlobalY,
+          GlobalX + lenUnit * 85, ClientHeight - 3 * GlobalY);
+        Brush.Color := clBtnFace;
+    end;
+>>>>>>> main
 
 end;
 
@@ -814,6 +971,54 @@ begin
   Timer1.Enabled := false;
   Repaint;
 
+<<<<<<< HEAD
+=======
+    InitMovieBorders;
+
+    DrawChristmasTree(400, 400, 1);
+    DrawSnowMan(1100, 50);
+    btnBackgroundTrack.Enabled := false;
+    // Button is not clickable more after frist click
+end;
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+    FramesCount := 30;
+    CurrFrame := 0;
+
+    SetLength(Cartoon, FramesCount);
+
+    for var i := Low(Cartoon) to High(Cartoon) do
+    begin
+        case i mod 3 of
+            0:
+                Cartoon[i] := PersonFirstFrame;
+            1:
+                Cartoon[i] := PersonSecondFrame;
+            2:
+                Cartoon[i] := PersonThirdFrame;
+
+        end;
+    end;
+
+end;
+
+procedure TForm1.Timer1Timer(Sender: TObject);
+begin
+    Canvas.Pen.Mode := pmNotXor;
+    DrawPerson(FirstPerson);
+    with FirstPerson do
+        FirstPerson := ConstructorPerson(Center.x - 5, Center.y + 10, Size + 1);
+
+    if CurrFrame >= FramesCount - 1 then
+        Timer1.Enabled := false
+    else
+    begin
+        Cartoon[CurrFrame](FirstPerson);
+        DrawPerson(FirstPerson);
+        inc(CurrFrame);
+    end;
+>>>>>>> main
 end;
 
 end.

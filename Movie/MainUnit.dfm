@@ -16,6 +16,7 @@ object MainForm: TMainForm
   object btnSpawnStick: TButton
     Left = 1080
     Top = 205
+    Top = 189
     Width = 75
     Height = 25
     Caption = 'Spawn Stick'
@@ -49,6 +50,7 @@ object MainForm: TMainForm
   object btnBackgroundTrack: TButton
     Left = 1080
     Top = 245
+    Top = 220
     Width = 75
     Height = 25
     Caption = 'Background'
@@ -59,6 +61,7 @@ object MainForm: TMainForm
   object btnPedestal: TButton
     Left = 1080
     Top = 288
+    Top = 251
     Width = 75
     Height = 25
     Caption = 'Pedestal'
@@ -66,6 +69,7 @@ object MainForm: TMainForm
     TabOrder = 5
     OnClick = btnPedestalClick
   end
+<<<<<<< HEAD
   object Button1: TButton
     Left = 1080
     Top = 408
@@ -74,6 +78,16 @@ object MainForm: TMainForm
     Caption = 'MVP'
     TabOrder = 6
     OnClick = ButtonClear
+=======
+  object btnFinishFence: TButton
+    Left = 1080
+    Top = 282
+    Width = 75
+    Height = 25
+    Caption = 'Fence'
+    TabOrder = 6
+    OnClick = btnFinishFenceClick
+>>>>>>> main
   end
   object Timer1: TTimer
     Enabled = False
