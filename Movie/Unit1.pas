@@ -1,4 +1,4 @@
-unit Unit1;
+﻿unit Unit1;
 
 interface
 
@@ -26,7 +26,8 @@ type
   end;
 
   TThreePoints = array [1 .. 3] of TPoint;
-  TTwoPoints = array [1 .. 2] of TPoint;
+  TTwoPoints   = array [1 .. 2] of TPoint;
+  TPolygon     = array of TPoint;
 
   TPerson = record
     Size: integer;
@@ -37,7 +38,7 @@ type
     Head: TRect;
   end;
 
-  TFrame = procedure(const currPerson: TPerson);
+  TFrame  = procedure(const currPerson: TPerson);
   TFrames = array of TFrame;
 
 var
@@ -47,24 +48,76 @@ implementation
 
 {$R *.dfm}
 
+const
+  GlobalX = 100;
+  GlobalY = 100;
+  LengthX = 2000;
+  LengthY = 1100;
+
 var
   FirstPerson: TPerson;
-  cartoon: TFrames;
-  framesCount: integer;
-  currFrame: integer;
+  Cartoon: TFrames;
+  FramesCount: integer;
+  CurrFrame: integer;
+
+procedure InitMovieBorders;
+var
+  Borders: TRect;
+begin
+  Borders.Create(TPoint.Create(GlobalX, GlobalY), TPoint.Create(GlobalX + LengthX, GlobalY + LengthY));
+
+  with Form1.Canvas do
+  begin
+    Pen.Width := 6;
+    Pen.Mode := pmCopy;
+    Pen.Color := clBlack;
+    Brush.Style := bsClear;
+
+    Rectangle(GlobalX, GlobalY, GlobalX + LengthX, GlobalY + LengthY);
+  end;
+
+end;
 
 procedure DrawBackground();
+var
+  Fence: TPolygon;
 begin
   with Form1.Canvas do
   begin
     Pen.Width := 3;
-    MoveTo(400, 25);
-    LineTo(100, 680);
-    MoveTo(800, 25);
-    LineTo(1100, 680);
-    Rectangle(60, 500, 100, 680);
-    Rectangle(1100, 500, 1140, 680);
-    Rectangle(60, 540, 1140, 640);
+    Pen.Color := clBlack;
+    Brush.Style := bsVertical;
+    Brush.Color := clBlack;
+
+    SetLength(Fence, 4);
+
+    Fence[0] := TPoint.Create(GlobalX + 3 * LengthX div 8, GlobalY + 150);
+    Fence[1] := TPoint.Create(GlobalX + 3 * LengthX div 8, GlobalY + 150 - 50);
+    Fence[2] := TPoint.Create(GlobalX + LengthX div 8, GlobalY + LengthY - 50 - 200);
+    Fence[3] := TPoint.Create(GlobalX + LengthX div 8, GlobalY + LengthY - 50);
+    Polygon(Fence);
+
+    Fence[0] := TPoint.Create(GlobalX + 5 * LengthX div 8, GlobalY + 150);
+    Fence[1] := TPoint.Create(GlobalX + 5 * LengthX div 8, GlobalY + 150 - 50);
+    Fence[2] := TPoint.Create(GlobalX + 7 * LengthX div 8, GlobalY + LengthY - 50 - 200);
+    Fence[3] := TPoint.Create(GlobalX + 7 * LengthX div 8, GlobalY + LengthY - 50);
+    Polygon(Fence);
+
+    MoveTo(GlobalX + 3 * LengthX div 8, GlobalY + 150);
+    LineTo(GlobalX + 5 * LengthX div 8, GlobalY + 150);
+
+    Fence[0] := TPoint.Create(GlobalX + LengthX div 8, GlobalY + LengthY - 50 - 200);
+    Fence[1] := TPoint.Create(GlobalX + LengthX div 8, GlobalY + LengthY - 50);
+    Fence[2] := TPoint.Create(GlobalX, GlobalY + LengthY - 50);
+    Fence[3] := TPoint.Create(GlobalX, GlobalY + LengthY - 50 - 200);
+    Polygon(Fence);
+
+    Fence[0] := TPoint.Create(GlobalX + 7 * LengthX div 8, GlobalY + LengthY - 50 - 200);
+    Fence[1] := TPoint.Create(GlobalX + 7 * LengthX div 8, GlobalY + LengthY - 50);
+    Fence[2] := TPoint.Create(GlobalX + LengthX, GlobalY + LengthY - 50);
+    Fence[3] := TPoint.Create(GlobalX + LengthX, GlobalY + LengthY - 50 - 200);
+    Polygon(Fence);
+
   end;
 end;
 
@@ -167,6 +220,13 @@ begin
     Pen.Color := clWebDarkOrchid;
     Brush.Color := clWhite;
     Pen.Width := 5;
+    Pen.Color := clWebDarkOrchid;
+    Brush.Color := clWhite;
+    Pen.Width := 5;
+    Pen.Color := clBlack;
+    Pen.Mode := pmNotXor;
+    Brush.Style := bsClear;
+
     PolyLine(PersonToDraw.LegLeft);
     PolyLine(PersonToDraw.LegRight);
     PolyLine(PersonToDraw.ArmLeft);
@@ -179,9 +239,9 @@ end;
 
 procedure TForm1.Button1Click(Sender: TObject);
 begin
-  currFrame := 0;
-  FirstPerson := ConstructorPerson(StrToInt(Edit1.Text), StrToInt(Edit2.Text),
-    StrToInt(Edit3.Text));
+  CurrFrame := 0;
+  FirstPerson := ConstructorPerson(StrToInt(Edit1.Text), StrToInt(Edit2.Text), StrToInt(Edit3.Text));
+
   PersonFirstFrame(FirstPerson);
   DrawPerson(FirstPerson);
 
@@ -193,6 +253,9 @@ end;
 procedure TForm1.Button2Click(Sender: TObject);
 begin
   DrawBackground();
+
+  InitMovieBorders;
+
   DrawChristmasTree(300, 50);
   DrawSnowMan(1100, 50);
   Button2.Enabled := false; // Button is not clickable more after frist click
@@ -200,17 +263,17 @@ end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-  framesCount := 30;
-  currFrame := 0;
+  FramesCount := 30;
+  CurrFrame := 0;
 
-  SetLength(cartoon, framesCount);
+  SetLength(Cartoon, FramesCount);
 
-  for var i := Low(cartoon) to High(cartoon) do
+  for var i := Low(Cartoon) to High(Cartoon) do
   begin
     if (i mod 2 = 0) then
-      cartoon[i] := PersonFirstFrame
+      Cartoon[i] := PersonFirstFrame
     else
-      cartoon[i] := PersonSecondFrame;
+      Cartoon[i] := PersonSecondFrame;
   end;
 
 end;
@@ -222,14 +285,26 @@ begin
   with FirstPerson do
     FirstPerson := ConstructorPerson(Center.x + 5, Center.y + 10, Size + 1);
 
-  if currFrame >= framesCount - 1 then
+  if CurrFrame >= FramesCount - 1 then
     Timer1.Enabled := false
   else
   begin
-    cartoon[currFrame](FirstPerson);
+    Cartoon[CurrFrame](FirstPerson);
     DrawPerson(FirstPerson);
-    inc(currFrame);
+    inc(CurrFrame);
   end;
 end;
 
 end.
+
+    // MoveTo(GlobalX + 5 * LengthX div 8, GlobalY + 50);
+    // LineTo(GlobalX + 7 * LengthX div 8, GlobalY + LengthY - 50);
+    // Rectangle(GlobalX, 500, GlobalX + 40, 680);
+    //
+    // MoveTo(400, 25);
+    // LineTo(100, 680);
+    // MoveTo(800, 25);
+    // LineTo(1100, 680);
+    // Rectangle(60, 500, 100, 680);
+    // Rectangle(1100, 500, 1140, 680);
+    // Rectangle(60, 540, 1140, 640);
