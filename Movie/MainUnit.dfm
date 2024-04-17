@@ -15,7 +15,7 @@ object Form1: TForm1
   TextHeight = 15
   object btnSpawnStick: TButton
     Left = 1080
-    Top = 205
+    Top = 189
     Width = 75
     Height = 25
     Caption = 'Spawn Stick'
@@ -48,7 +48,7 @@ object Form1: TForm1
   end
   object btnBackgroundTrack: TButton
     Left = 1080
-    Top = 245
+    Top = 220
     Width = 75
     Height = 25
     Caption = 'Background'
@@ -58,13 +58,22 @@ object Form1: TForm1
   end
   object btnPedestal: TButton
     Left = 1080
-    Top = 288
+    Top = 251
     Width = 75
     Height = 25
     Caption = 'Pedestal'
     DisabledImageName = 'btnPedestal'
     TabOrder = 5
     OnClick = btnPedestalClick
+  end
+  object btnFinishFence: TButton
+    Left = 1080
+    Top = 282
+    Width = 75
+    Height = 25
+    Caption = 'Fence'
+    TabOrder = 6
+    OnClick = btnFinishFenceClick
   end
   object Timer1: TTimer
     Enabled = False
