@@ -15,7 +15,6 @@ object MainForm: TMainForm
   TextHeight = 15
   object btnSpawnStick: TButton
     Left = 1080
-    Top = 205
     Top = 189
     Width = 75
     Height = 25
@@ -49,7 +48,6 @@ object MainForm: TMainForm
   end
   object btnBackgroundTrack: TButton
     Left = 1080
-    Top = 245
     Top = 220
     Width = 75
     Height = 25
@@ -60,7 +58,6 @@ object MainForm: TMainForm
   end
   object btnPedestal: TButton
     Left = 1080
-    Top = 288
     Top = 251
     Width = 75
     Height = 25
