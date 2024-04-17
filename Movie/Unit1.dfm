@@ -3,8 +3,8 @@ object Form1: TForm1
   Top = 0
   BorderStyle = bsToolWindow
   Caption = 'Form1'
-  ClientHeight = 649
-  ClientWidth = 1254
+  ClientHeight = 605
+  ClientWidth = 1236
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,8 +14,8 @@ object Form1: TForm1
   OnCreate = FormCreate
   TextHeight = 15
   object Button1: TButton
-    Left = 936
-    Top = 581
+    Left = 1080
+    Top = 205
     Width = 75
     Height = 25
     Caption = 'Spawn Stick'
@@ -23,32 +23,32 @@ object Form1: TForm1
     OnClick = Button1Click
   end
   object Edit1: TEdit
-    Left = 936
-    Top = 494
+    Left = 1080
+    Top = 102
     Width = 121
     Height = 23
     TabOrder = 1
     Text = '100'
   end
   object Edit2: TEdit
-    Left = 936
-    Top = 523
+    Left = 1080
+    Top = 131
     Width = 121
     Height = 23
     TabOrder = 2
     Text = '100'
   end
   object Edit3: TEdit
-    Left = 936
-    Top = 552
+    Left = 1080
+    Top = 160
     Width = 121
     Height = 23
     TabOrder = 3
     Text = '10'
   end
   object Button2: TButton
-    Left = 1024
-    Top = 581
+    Left = 1080
+    Top = 245
     Width = 75
     Height = 25
     Caption = 'Button2'
@@ -58,7 +58,7 @@ object Form1: TForm1
   object Timer1: TTimer
     Enabled = False
     OnTimer = Timer1Timer
-    Left = 832
-    Top = 216
+    Left = 1080
+    Top = 304
   end
 end
