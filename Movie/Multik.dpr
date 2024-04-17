@@ -2,13 +2,17 @@ program Multik;
 
 uses
   Vcl.Forms,
-  MainUnit in 'MainUnit.pas' {Form1};
+  MainUnit in 'MainUnit.pas' {MainForm},
+  DataTypes in 'DataTypes.pas',
+  AudioRoutine in 'AudioRoutine.pas',
+  AnimationRoutine in 'AnimationRoutine.pas',
+  StaticImageRoutine in 'StaticImageRoutine.pas';
 
 {$R *.res}
 
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
-  Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(TMainForm, MainForm);
   Application.Run;
 end.

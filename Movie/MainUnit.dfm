@@ -1,10 +1,10 @@
-object Form1: TForm1
+object MainForm: TMainForm
   Left = 0
   Top = 0
   BorderStyle = bsToolWindow
-  Caption = 'Form1'
-  ClientHeight = 1100
-  ClientWidth = 2000
+  Caption = 'MainForm'
+  ClientHeight = 1056
+  ClientWidth = 1982
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -65,6 +65,15 @@ object Form1: TForm1
     DisabledImageName = 'btnPedestal'
     TabOrder = 5
     OnClick = btnPedestalClick
+  end
+  object Button1: TButton
+    Left = 1080
+    Top = 408
+    Width = 75
+    Height = 25
+    Caption = 'MVP'
+    TabOrder = 6
+    OnClick = ButtonClear
   end
   object Timer1: TTimer
     Enabled = False
