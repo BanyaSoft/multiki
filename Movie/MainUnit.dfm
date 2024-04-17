@@ -3,8 +3,8 @@ object Form1: TForm1
   Top = 0
   BorderStyle = bsToolWindow
   Caption = 'Form1'
-  ClientHeight = 605
-  ClientWidth = 1236
+  ClientHeight = 561
+  ClientWidth = 1218
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -28,7 +28,7 @@ object Form1: TForm1
     Width = 121
     Height = 23
     TabOrder = 1
-    Text = '100'
+    Text = '1000'
   end
   object Edit2: TEdit
     Left = 1080
@@ -36,7 +36,7 @@ object Form1: TForm1
     Width = 121
     Height = 23
     TabOrder = 2
-    Text = '100'
+    Text = '200'
   end
   object Edit3: TEdit
     Left = 1080
@@ -44,7 +44,7 @@ object Form1: TForm1
     Width = 121
     Height = 23
     TabOrder = 3
-    Text = '10'
+    Text = '20'
   end
   object Button2: TButton
     Left = 1080

@@ -1,8 +1,8 @@
-program Project2;
+program Multik;
 
 uses
   Vcl.Forms,
-  Unit1 in 'Unit1.pas' {Form1};
+  MainUnit in 'MainUnit.pas' {Form1};
 
 {$R *.res}
 
