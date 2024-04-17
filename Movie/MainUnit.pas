@@ -9,14 +9,14 @@ uses
 
 type
     TForm1 = class(TForm)
-        Button1: TButton;
+    btnSpawnStick: TButton;
         Edit1: TEdit;
         Edit2: TEdit;
         Edit3: TEdit;
         Timer1: TTimer;
     btnBackgroundTrack: TButton;
         btnPedestal: TButton;
-        procedure Button1Click(Sender: TObject);
+        procedure btnSpawnStickClick(Sender: TObject);
         procedure btnBackgroundTrackClick(Sender: TObject);
         procedure Timer1Timer(Sender: TObject);
         procedure FormCreate(Sender: TObject);
@@ -481,7 +481,7 @@ begin
 
 end;
 
-procedure TForm1.Button1Click(Sender: TObject);
+procedure TForm1.btnSpawnStickClick(Sender: TObject);
 begin
     CurrFrame := 0;
     FirstPerson := ConstructorPerson(StrToInt(Edit1.Text), StrToInt(Edit2.Text),

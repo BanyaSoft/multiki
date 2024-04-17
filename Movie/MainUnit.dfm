@@ -13,14 +13,14 @@ object Form1: TForm1
   Font.Style = []
   OnCreate = FormCreate
   TextHeight = 15
-  object Button1: TButton
+  object btnSpawnStick: TButton
     Left = 1080
     Top = 205
     Width = 75
     Height = 25
     Caption = 'Spawn Stick'
     TabOrder = 0
-    OnClick = Button1Click
+    OnClick = btnSpawnStickClick
   end
   object Edit1: TEdit
     Left = 1080
