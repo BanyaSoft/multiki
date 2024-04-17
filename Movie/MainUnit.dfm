@@ -3,8 +3,8 @@ object Form1: TForm1
   Top = 0
   BorderStyle = bsToolWindow
   Caption = 'Form1'
-  ClientHeight = 561
-  ClientWidth = 1218
+  ClientHeight = 1100
+  ClientWidth = 2000
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -46,19 +46,30 @@ object Form1: TForm1
     TabOrder = 3
     Text = '20'
   end
-  object Button2: TButton
+  object btnBackgroundTrack: TButton
     Left = 1080
     Top = 245
     Width = 75
     Height = 25
-    Caption = 'Button2'
+    Caption = 'Background'
+    DisabledImageName = 'btnBackgroundTrack'
     TabOrder = 4
-    OnClick = Button2Click
+    OnClick = btnBackgroundTrackClick
+  end
+  object btnPedestal: TButton
+    Left = 1080
+    Top = 288
+    Width = 75
+    Height = 25
+    Caption = 'Pedestal'
+    DisabledImageName = 'btnPedestal'
+    TabOrder = 5
+    OnClick = btnPedestalClick
   end
   object Timer1: TTimer
     Enabled = False
     OnTimer = Timer1Timer
     Left = 1080
-    Top = 304
+    Top = 336
   end
 end
