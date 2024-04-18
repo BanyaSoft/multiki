@@ -19,12 +19,17 @@ type
     timeAnimation2: TTimer;
     timeStarter2: TTimer;
     Trash: TTimer;
+    MediaPlayer1: TMediaPlayer;
+    timeStarter3: TTimer;
+    timeAnimation3: TTimer;
     procedure timeStarter1Timer(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure ButtonClear(Sender: TObject);
     procedure timeAnimation1Timer(Sender: TObject);
     procedure timeStarter2Timer(Sender: TObject);
     procedure timeAnimation2Timer(Sender: TObject);
+    procedure timeStarter3Timer(Sender: TObject);
+    procedure timeAnimation3Timer(Sender: TObject);
     procedure TrashTimer(Sender: TObject);
   private
     { Private declarations }
@@ -42,10 +47,13 @@ implementation
 var
   FirstPerson: TPerson;
   FirstEquip: TEquipment;
+  SecondPerson: TPerson;
+  SecondEquip: TEquipment;
   PersonAnimation: TPersonFrames;
   EquipAnimation: TEquipFrames;
   FramesCount: integer;
   CurrFrame: integer;
+  CurrFrame2: integer;
 
   { ***************************************************************************************************** }
 
@@ -250,67 +258,12 @@ begin
     Pen.Mode := pmCopy;
     Brush.Color := clWhite;
     Brush.Style := bsClear;
-
     MoveTo(x, y + Size);
     LineTo(x, y);
     LineTo(x + Size div 2, y + Size div 4);
     LineTo(x, y + Size div 3);
   end;
-
 end;
-
-// procedure DrawSecondBackground;
-// var
-// i, lenUnit: integer;
-// currX: integer;
-// currY: integer;
-// begin
-// with MainForm.Canvas, MainForm do
-// begin
-// Pen.Width := 2;
-// Pen.Color := clBlack;
-// Pen.Mode := pmCopy;
-// Brush.Color := clBtnFace;
-// Brush.Style := bsSolid;
-//
-// lenUnit := ClientWidth div 100;
-//
-// MainForm.Canvas.Rectangle(GlobalX, GlobalY, ClientWidth - GlobalX, ClientHeight - GlobalY);
-//
-// MoveTo(GlobalX + lenUnit, ClientHeight - GlobalY - lenUnit * 20);
-// LineTo(GlobalX + lenUnit * 90, ClientHeight - GlobalY - lenUnit * 10);
-// LineTo(GlobalX + lenUnit * 90, ClientHeight - GlobalY - lenUnit * 2);
-// LineTo(GlobalX + lenUnit, ClientHeight - GlobalY - lenUnit * 12);
-// LineTo(GlobalX + lenUnit, ClientHeight - GlobalY - lenUnit * 20);
-//
-// MoveTo(GlobalX + lenUnit, ClientHeight - GlobalY - lenUnit * 45);
-// LineTo(GlobalX + lenUnit * 90, ClientHeight - GlobalY - lenUnit * 35);
-// LineTo(GlobalX + lenUnit * 90, ClientHeight - GlobalY - lenUnit * 27);
-// LineTo(GlobalX + lenUnit, ClientHeight - GlobalY - lenUnit * 37);
-// LineTo(GlobalX + lenUnit, ClientHeight - GlobalY - lenUnit * 45);
-//
-
-//
-// DrawLittleFlag(GlobalX + lenUnit, ClientHeight - GlobalY - 5 * lenUnit - 75, 75);
-// DrawLittleFlag(GlobalX + 12 * lenUnit, ClientHeight - GlobalY - 4 * lenUnit - 75, 75);
-// DrawLittleFlag(GlobalX + 24 * lenUnit, ClientHeight - GlobalY - 3 * lenUnit - 75, 75);
-// DrawLittleFlag(GlobalX + 36 * lenUnit, ClientHeight - GlobalY - 2 * lenUnit - 75, 75);
-// DrawLittleFlag(GlobalX + 48 * lenUnit, ClientHeight - GlobalY - 1 * lenUnit - 75, 75);
-//
-// DrawLittleFlag(GlobalX + 50 * lenUnit, GlobalY + 5 * lenUnit - 75, 75);
-// DrawLittleFlag(GlobalX + 62 * lenUnit, GlobalY + 6 * lenUnit - 75, 75);
-// DrawLittleFlag(GlobalX + 74 * lenUnit, GlobalY + 7 * lenUnit - 75, 75);
-// DrawLittleFlag(GlobalX + 86 * lenUnit, GlobalY + 8 * lenUnit - 75, 75);
-//
-// Brush.Color := clBlack;
-// Pen.Width := 4;
-// MoveTo(GlobalX + 80 * lenUnit, GlobalY + 17 * lenUnit);
-// LineTo(GlobalX + 70 * lenUnit, GlobalY + 33 * lenUnit - 5);
-// MoveTo(GlobalX + 85 * lenUnit, GlobalY + 18 * lenUnit - 6);
-// LineTo(GlobalX + 75 * lenUnit, GlobalY + 34 * lenUnit - 11);
-// Pen.Width := 2;
-// end;
-// end;
 
 procedure DrawSecondBackground;
 var
@@ -319,7 +272,6 @@ var
 begin
   lenUnit := LengthX div 100;
   SetLength(Fence, 4);
-
   with MainForm.Canvas, MainForm do
   begin
     Pen.Width := 6;
@@ -415,7 +367,6 @@ begin
     Fence[3] := TPoint.Create(GlobalX + 75 * lenUnit, GlobalY + 34 * lenUnit
       - 11 + 20);
     Polygon(Fence);
-
   end;
 end;
 
@@ -810,12 +761,13 @@ begin
   Result := NewEquipment;
 end;
 
-procedure DrawEquipment(const EquipToDraw: TEquipment; flag: boolean = True);
+procedure DrawEquipment(const EquipToDraw: TEquipment; colour: TColor;
+  flag: boolean = True);
 begin
   with MainForm.Canvas do
   begin
-    Pen.Width := 2;
-    Pen.Color := clRed;
+
+    Pen.Color := colour;
     if flag then
 
       Pen.Mode := pmNotXor
@@ -824,8 +776,11 @@ begin
     Brush.Color := clWhite;
     Brush.Style := bsClear;
 
+    Pen.Width := 4;
     PolyLine(EquipToDraw.SnowShoeLeft);
     PolyLine(EquipToDraw.SnowShoeRight);
+
+    Pen.Width := 2;
     PolyLine(EquipToDraw.SnowStickLeft);
     PolyLine(EquipToDraw.SnowStickRight);
   end;
@@ -1027,12 +982,15 @@ procedure TMainForm.FormCreate(Sender: TObject);
 begin
   timeStarter1.Interval := 1000;
   timeStarter1.Enabled := True;
+
+  MediaPlayer1.FileName := 'Second.mp3';
+  MediaPlayer1.Open;
+  MediaPlayer1.Play;
 end;
 
 procedure TMainForm.timeStarter1Timer(Sender: TObject);
 begin
   DrawWhiteSpace;
-
   FramesCount := 120;
   CurrFrame := 0;
 
@@ -1096,13 +1054,13 @@ begin
 
   DrawSnowMan(1900, 550);
 
-  FirstPerson := ConstructorPerson(1300, 200, 20);
+  FirstPerson := ConstructorPerson(1300, 200, 17);
   PersonForthFrame(FirstPerson);
   DrawPerson(FirstPerson);
 
   FirstEquip := ConstructorEquip(FirstPerson);
   EquipmentForthFrame(FirstEquip);
-  DrawEquipment(FirstEquip);
+  DrawEquipment(FirstEquip, clRed);
 
   timeAnimation1.Interval := 100;
   timeAnimation1.Enabled := True;
@@ -1146,18 +1104,67 @@ begin
 
   DrawSecondBackground();
 
-  FirstPerson := ConstructorPerson(150, 300, 30);
+  FirstPerson := ConstructorPerson(150, 300, 40);
   PersonOtherSideFirstFrame(FirstPerson);
   DrawPerson(FirstPerson);
 
   FirstEquip := ConstructorEquip(FirstPerson);
   EquipmentOtherSideFirstFrame(FirstEquip);
-  DrawEquipment(FirstEquip);
+  DrawEquipment(FirstEquip, clRed);
 
-  timeAnimation2.Interval := 100;
+  timeAnimation2.Interval := 120;
   timeAnimation2.Enabled := True;
 
   timeStarter2.Enabled := False;
+end;
+
+procedure TMainForm.timeStarter3Timer(Sender: TObject);
+begin
+
+  FramesCount := 120;
+  CurrFrame2 := 0;
+
+  SetLength(PersonAnimation, FramesCount);
+  SetLength(EquipAnimation, FramesCount);
+
+  for var i := Low(PersonAnimation) to High(PersonAnimation) do
+  begin
+    case i mod 3 of
+      0:
+        PersonAnimation[i] := @PersonOtherSideFirstFrame;
+      1:
+        PersonAnimation[i] := @PersonOtherSideSecondFrame;
+      2:
+        PersonAnimation[i] := @PersonOtherSideThirdFrame;
+    end;
+
+    case i mod 3 of
+      0:
+        EquipAnimation[i] := @EquipmentOtherSideFirstFrame;
+      1:
+        EquipAnimation[i] := @EquipmentOtherSideSecondFrame;
+      2:
+        EquipAnimation[i] := @EquipmentOtherSideThirdFrame;
+    end;
+
+  end;
+
+  // InitMovieBorders;
+
+  // DrawSecondBackground();
+
+  SecondPerson := ConstructorPerson(150, 430, 40);
+  PersonOtherSideFirstFrame(SecondPerson);
+  DrawPerson(SecondPerson);
+
+  SecondEquip := ConstructorEquip(SecondPerson);
+  EquipmentOtherSideFirstFrame(SecondEquip);
+  DrawEquipment(SecondEquip, clGreen);
+
+  timeAnimation3.Interval := 70;
+  timeAnimation3.Enabled := True;
+
+  timeStarter3.Enabled := False;
 end;
 
 procedure TMainForm.TrashTimer(Sender: TObject);
@@ -1178,8 +1185,11 @@ begin
   begin
     timeAnimation1.Enabled := False;
 
-    timeStarter2.Interval := 1000;
+    timeStarter2.Interval := 500;
     timeStarter2.Enabled := True;
+    timeStarter3.Interval := 5500;
+    timeStarter3.Enabled := True;
+
   end
   else
   begin
@@ -1189,12 +1199,12 @@ begin
       deltaSize := 0;
 
     DrawPerson(FirstPerson);
-    DrawEquipment(FirstEquip);
+    DrawEquipment(FirstEquip, clRed);
 
     if @PersonAnimation[CurrFrame] = @PersonFirstFrame then
       deltaPoint := TPoint.Create(-3, 3)
     else if @PersonAnimation[CurrFrame] = @PersonSecondFrame then
-      deltaPoint := TPoint.Create(-3, 3)
+      deltaPoint := TPoint.Create(-3, 2)
     else if @PersonAnimation[CurrFrame] = @PersonThirdFrame then
       deltaPoint := TPoint.Create(-7, 10)
     else if @PersonAnimation[CurrFrame] = @PersonForthFrame then
@@ -1214,7 +1224,7 @@ begin
     EquipAnimation[CurrFrame](FirstEquip);
 
     DrawPerson(FirstPerson);
-    DrawEquipment(FirstEquip);
+    DrawEquipment(FirstEquip, clRed);
 
     Inc(CurrFrame);
   end;
@@ -1225,16 +1235,16 @@ var
   deltaSize: integer;
   deltaPoint: TPoint;
 begin
-
   if CurrFrame >= FramesCount - 1 then
   begin
     timeAnimation2.Enabled := False;
+    sleep(2000);
     Trash.Enabled := True;
   end
   else
   begin
     DrawPerson(FirstPerson);
-    DrawEquipment(FirstEquip);
+    DrawEquipment(FirstEquip, clRed);
 
     if @PersonAnimation[CurrFrame] = @PersonOtherSideFirstFrame then
       deltaPoint := TPoint.Create(10, 1)
@@ -1253,9 +1263,47 @@ begin
     EquipAnimation[CurrFrame](FirstEquip);
 
     DrawPerson(FirstPerson);
-    DrawEquipment(FirstEquip);
+    DrawEquipment(FirstEquip, clRed);
 
     Inc(CurrFrame);
+  end;
+
+end;
+
+procedure TMainForm.timeAnimation3Timer(Sender: TObject);
+var
+  deltaSize: integer;
+  deltaPoint: TPoint;
+begin
+  if CurrFrame2 >= FramesCount - 1 then
+  begin
+    timeAnimation3.Enabled := False;
+  end
+  else
+  begin
+    DrawPerson(SecondPerson);
+    DrawEquipment(SecondEquip, clGreen);
+
+    if @PersonAnimation[CurrFrame2] = @PersonOtherSideFirstFrame then
+      deltaPoint := TPoint.Create(10, 1)
+    else if @PersonAnimation[CurrFrame2] = @PersonOtherSideSecondFrame then
+      deltaPoint := TPoint.Create(10, 1)
+    else if @PersonAnimation[CurrFrame2] = @PersonOtherSideThirdFrame then
+      deltaPoint := TPoint.Create(20, 1);
+
+    with SecondPerson do
+      SecondPerson := ConstructorPerson(Center.x + deltaPoint.x,
+        Center.y + deltaPoint.y, Size);
+
+    PersonAnimation[CurrFrame2](SecondPerson);
+
+    SecondEquip := ConstructorEquip(SecondPerson);
+    EquipAnimation[CurrFrame2](SecondEquip);
+
+    DrawPerson(SecondPerson);
+    DrawEquipment(SecondEquip, clGreen);
+
+    Inc(CurrFrame2);
   end;
 
 end;
@@ -1266,6 +1314,8 @@ begin
   timeAnimation1.Enabled := False;
   timeStarter2.Enabled := False;
   timeAnimation2.Enabled := False;
+  timeAnimation3.Enabled := False;
+  timeStarter3.Enabled := False;
   Repaint;
 
 end;

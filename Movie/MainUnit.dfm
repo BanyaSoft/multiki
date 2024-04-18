@@ -3,8 +3,8 @@ object MainForm: TMainForm
   Top = 0
   BorderStyle = bsToolWindow
   Caption = 'MainForm'
-  ClientHeight = 615
-  ClientWidth = 1224
+  ClientHeight = 629
+  ClientWidth = 1232
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -46,6 +46,16 @@ object MainForm: TMainForm
     TabOrder = 3
     OnClick = ButtonClear
   end
+  object MediaPlayer1: TMediaPlayer
+    Left = 936
+    Top = 40
+    Width = 253
+    Height = 30
+    DoubleBuffered = True
+    Visible = False
+    ParentDoubleBuffered = False
+    TabOrder = 4
+  end
   object timeStarter1: TTimer
     Enabled = False
     OnTimer = timeStarter1Timer
@@ -74,7 +84,19 @@ object MainForm: TMainForm
     Enabled = False
     Interval = 80
     OnTimer = TrashTimer
-    Left = 984
-    Top = 40
+    Left = 1080
+    Top = 528
+  end
+  object timeStarter3: TTimer
+    Enabled = False
+    OnTimer = timeStarter3Timer
+    Left = 1112
+    Top = 336
+  end
+  object timeAnimation3: TTimer
+    Enabled = False
+    OnTimer = timeAnimation3Timer
+    Left = 1112
+    Top = 384
   end
 end
