@@ -1,10 +1,10 @@
-object Form1: TForm1
+object MainForm: TMainForm
   Left = 0
   Top = 0
   BorderStyle = bsToolWindow
-  Caption = 'Form1'
-  ClientHeight = 1100
-  ClientWidth = 2000
+  Caption = 'MainForm'
+  ClientHeight = 615
+  ClientWidth = 1224
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -13,21 +13,12 @@ object Form1: TForm1
   Font.Style = []
   OnCreate = FormCreate
   TextHeight = 15
-  object btnSpawnStick: TButton
-    Left = 1080
-    Top = 189
-    Width = 75
-    Height = 25
-    Caption = 'Spawn Stick'
-    TabOrder = 0
-    OnClick = Button1Click
-  end
   object Edit1: TEdit
     Left = 1080
     Top = 102
     Width = 121
     Height = 23
-    TabOrder = 1
+    TabOrder = 0
     Text = '1000'
   end
   object Edit2: TEdit
@@ -35,7 +26,7 @@ object Form1: TForm1
     Top = 131
     Width = 121
     Height = 23
-    TabOrder = 2
+    TabOrder = 1
     Text = '200'
   end
   object Edit3: TEdit
@@ -43,42 +34,40 @@ object Form1: TForm1
     Top = 160
     Width = 121
     Height = 23
-    TabOrder = 3
+    TabOrder = 2
     Text = '20'
   end
-  object btnBackgroundTrack: TButton
+  object Button1: TButton
     Left = 1080
-    Top = 220
+    Top = 211
     Width = 75
     Height = 25
-    Caption = 'Background'
-    DisabledImageName = 'btnBackgroundTrack'
-    TabOrder = 4
-    OnClick = btnBackgroundTrackClick
+    Caption = 'MVP'
+    TabOrder = 3
+    OnClick = ButtonClear
   end
-  object btnPedestal: TButton
-    Left = 1080
-    Top = 251
-    Width = 75
-    Height = 25
-    Caption = 'Pedestal'
-    DisabledImageName = 'btnPedestal'
-    TabOrder = 5
-    OnClick = btnPedestalClick
-  end
-  object btnFinishFence: TButton
-    Left = 1080
-    Top = 282
-    Width = 75
-    Height = 25
-    Caption = 'Fence'
-    TabOrder = 6
-    OnClick = btnFinishFenceClick
-  end
-  object Timer1: TTimer
+  object timeStarter1: TTimer
     Enabled = False
-    OnTimer = Timer1Timer
+    OnTimer = timeStarter1Timer
     Left = 1080
     Top = 336
+  end
+  object timeAnimation1: TTimer
+    Enabled = False
+    OnTimer = timeAnimation1Timer
+    Left = 1080
+    Top = 384
+  end
+  object timeAnimation2: TTimer
+    Enabled = False
+    OnTimer = timeAnimation2Timer
+    Left = 1080
+    Top = 480
+  end
+  object timeStarter2: TTimer
+    Enabled = False
+    OnTimer = timeStarter2Timer
+    Left = 1080
+    Top = 432
   end
 end

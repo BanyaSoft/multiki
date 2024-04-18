@@ -99,9 +99,13 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="MainUnit.pas">
-            <Form>Form1</Form>
+            <Form>MainForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="DataTypes.pas"/>
+        <DCCReference Include="AudioRoutine.pas"/>
+        <DCCReference Include="AnimationRoutine.pas"/>
+        <DCCReference Include="StaticImageRoutine.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
