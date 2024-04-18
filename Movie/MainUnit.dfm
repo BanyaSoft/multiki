@@ -3,7 +3,7 @@ object MainForm: TMainForm
   Top = 0
   BorderStyle = bsToolWindow
   Caption = 'MainForm'
-  ClientHeight = 629
+  ClientHeight = 645
   ClientWidth = 1232
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -98,5 +98,11 @@ object MainForm: TMainForm
     OnTimer = timeAnimation3Timer
     Left = 1112
     Top = 384
+  end
+  object timeDebug: TTimer
+    Enabled = False
+    OnTimer = timeDebugTimer
+    Left = 1112
+    Top = 432
   end
 end
