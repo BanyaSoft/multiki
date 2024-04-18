@@ -70,4 +70,11 @@ object MainForm: TMainForm
     Left = 1080
     Top = 432
   end
+  object Trash: TTimer
+    Enabled = False
+    Interval = 80
+    OnTimer = TrashTimer
+    Left = 984
+    Top = 40
+  end
 end
