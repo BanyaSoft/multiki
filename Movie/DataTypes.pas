@@ -8,8 +8,8 @@ uses
 const
   GlobalX = 100;
   GlobalY = 100;
-  LengthX = 2000;
-  LengthY = 1100;
+  LengthX = 1920;
+  LengthY = 1080;
 
 type
   TThreePoints = array [1 .. 3] of TPoint;

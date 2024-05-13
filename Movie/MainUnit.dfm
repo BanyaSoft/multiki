@@ -3,43 +3,44 @@ object MainForm: TMainForm
   Top = 0
   BorderStyle = bsToolWindow
   Caption = 'MainForm'
-  ClientHeight = 645
-  ClientWidth = 1232
+  ClientHeight = 625
+  ClientWidth = 1222
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  Position = poDesktopCenter
   OnCreate = FormCreate
   TextHeight = 15
   object Edit1: TEdit
-    Left = 1080
-    Top = 102
+    Left = 152
+    Top = 40
     Width = 121
     Height = 23
     TabOrder = 0
     Text = '1000'
   end
   object Edit2: TEdit
-    Left = 1080
-    Top = 131
+    Left = 296
+    Top = 40
     Width = 121
     Height = 23
     TabOrder = 1
     Text = '200'
   end
   object Edit3: TEdit
-    Left = 1080
-    Top = 160
+    Left = 440
+    Top = 40
     Width = 121
     Height = 23
     TabOrder = 2
     Text = '20'
   end
   object Button1: TButton
-    Left = 1080
-    Top = 211
+    Left = 600
+    Top = 39
     Width = 75
     Height = 25
     Caption = 'MVP'
@@ -104,5 +105,9 @@ object MainForm: TMainForm
     OnTimer = timeDebugTimer
     Left = 1112
     Top = 432
+  end
+  object timeStarter4: TTimer
+    Left = 1120
+    Top = 488
   end
 end
