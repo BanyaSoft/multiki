@@ -3,8 +3,8 @@ object MainForm: TMainForm
   Top = 0
   BorderStyle = bsToolWindow
   Caption = 'MainForm'
-  ClientHeight = 625
-  ClientWidth = 1222
+  ClientHeight = 585
+  ClientWidth = 1202
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -48,7 +48,7 @@ object MainForm: TMainForm
     OnClick = ButtonClear
   end
   object MediaPlayer1: TMediaPlayer
-    Left = 936
+    Left = 941
     Top = 40
     Width = 253
     Height = 30
@@ -56,6 +56,26 @@ object MainForm: TMainForm
     Visible = False
     ParentDoubleBuffered = False
     TabOrder = 4
+  end
+  object mpVictoryMusic: TMediaPlayer
+    Left = 936
+    Top = 76
+    Width = 253
+    Height = 30
+    DoubleBuffered = True
+    Visible = False
+    ParentDoubleBuffered = False
+    TabOrder = 5
+  end
+  object mpClap: TMediaPlayer
+    Left = 936
+    Top = 112
+    Width = 253
+    Height = 30
+    DoubleBuffered = True
+    Visible = False
+    ParentDoubleBuffered = False
+    TabOrder = 6
   end
   object timeStarter1: TTimer
     Enabled = False
@@ -107,7 +127,15 @@ object MainForm: TMainForm
     Top = 432
   end
   object timeStarter4: TTimer
+    Enabled = False
+    OnTimer = timeStarter4Timer
     Left = 1120
     Top = 488
+  end
+  object timeAnimation4: TTimer
+    Enabled = False
+    OnTimer = timeAnimation4Timer
+    Left = 1120
+    Top = 536
   end
 end
