@@ -106,6 +106,7 @@
         <DCCReference Include="AudioRoutine.pas"/>
         <DCCReference Include="AnimationRoutine.pas"/>
         <DCCReference Include="StaticImageRoutine.pas"/>
+        <DCCReference Include="Dance.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

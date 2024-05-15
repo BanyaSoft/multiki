@@ -14,6 +14,16 @@ object MainForm: TMainForm
   Position = poDesktopCenter
   OnCreate = FormCreate
   TextHeight = 15
+  object imgMain: TImage
+    Left = 0
+    Top = 0
+    Width = 1202
+    Height = 585
+    Align = alClient
+    ExplicitTop = 1
+    ExplicitWidth = 1194
+    ExplicitHeight = 584
+  end
   object Edit1: TEdit
     Left = 152
     Top = 40

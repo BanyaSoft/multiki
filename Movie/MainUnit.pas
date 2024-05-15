@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics, System.Types,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls,
-  DataTypes, AudioRoutine, Vcl.MPlayer, Math;
+  DataTypes, AudioRoutine, Vcl.MPlayer, Math, Dance;
 
 type
   TMainForm = class(TForm)
@@ -27,6 +27,7 @@ type
     timeAnimation4: TTimer;
     mpVictoryMusic: TMediaPlayer;
     mpClap: TMediaPlayer;
+    imgMain: TImage;
     procedure timeStarter1Timer(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure ButtonClear(Sender: TObject);
@@ -51,20 +52,6 @@ var
 implementation
 
 {$R *.dfm}
-procedure PictureDraw1(Sender: TObject); forward;
-procedure PictureDraw2(Sender: TObject); forward;
-procedure PictureDraw3(Sender: TObject); forward;
-procedure PictureDraw4(Sender: TObject); forward;
-procedure PictureDraw5(Sender: TObject); forward;
-procedure PictureDraw6(Sender: TObject); forward;
-procedure PictureDraw7(Sender: TObject); forward;
-procedure PictureDraw8(Sender: TObject); forward;
-procedure PictureDraw9(Sender: TObject); forward;
-procedure PictureDraw10(Sender: TObject); forward;
-procedure PictureDraw11(Sender: TObject); forward;
-procedure PictureDraw12(Sender: TObject); forward;
-procedure PictureDraw13(Sender: TObject); forward;
-procedure PictureDraw14(Sender: TObject); forward;
 
 var
   FirstPerson: TPerson;
@@ -88,7 +75,7 @@ var
 begin
   Borders.Create(TPoint.Create(0, 0), TPoint.Create(LengthX, LengthY));
 
-  with MainForm.Canvas do
+  with MainForm.imgMain.Canvas do
   begin
     Brush.Color := MainForm.Color;
     Brush.Style := bsSolid;
@@ -104,7 +91,7 @@ begin
   Borders.Create(TPoint.Create(GlobalX, GlobalY),
     TPoint.Create(LengthX - GlobalX, LengthY - GlobalY));
 
-  with MainForm.Canvas do
+  with MainForm.imgMain.Canvas do
   begin
     Pen.Width := 6;
     Pen.Color := clBlack;
@@ -121,7 +108,7 @@ procedure DrawFirstBackground;
 var
   Fence: TPolygon;
 begin
-  with MainForm.Canvas do
+  with MainForm.imgMain.Canvas do
   begin
 
     Pen.Width := 3;
@@ -174,7 +161,7 @@ end;
 
 procedure DrawChristmasTree(x, y, n: integer); // (x,y) Root bottom right
 begin
-  With MainForm.Canvas do
+  With MainForm.imgMain.Canvas do
   Begin
     Pen.Width := 1;
     Pen.Color := clWebSaddleBrown;
@@ -243,7 +230,7 @@ end;
 
 procedure DrawSnowMan(x, y, size: integer); // (x,y) head top center
 begin
-  with MainForm.Canvas do
+  with MainForm.imgMain.Canvas do
   begin
     Pen.Width := 3;
     Pen.Color := clAqua;
@@ -274,7 +261,7 @@ end;
 
 procedure DrawLittleFlag(x, y, size: integer);
 begin
-  with MainForm.Canvas do
+  with MainForm.imgMain.Canvas do
   begin
     Pen.Width := 6;
     Pen.Color := clBlack;
@@ -295,7 +282,7 @@ var
 begin
   lenUnit := LengthX div 100;
   SetLength(Fence, 4);
-  with MainForm.Canvas, MainForm do
+  with MainForm.imgMain.Canvas, MainForm do
   begin
     Pen.Width := 6;
     Pen.Color := clBlack;
@@ -397,7 +384,7 @@ procedure DrawThirdBackground;
 var
   lenUnit: integer;
 begin
-  with MainForm.Canvas, MainForm do
+  with MainForm.imgMain.Canvas, MainForm do
   begin
     Pen.Width := 10;
     Pen.Color := clBlack;
@@ -459,7 +446,7 @@ begin
   OffsetX := 500;
   OffsetY := 100;
 
-  with MainForm.Canvas do
+  with MainForm.imgMain.Canvas do
   begin
     Pen.Width := 1;
     Pen.Color := clMaroon;
@@ -525,7 +512,7 @@ end;
 
 procedure DrawPerson(const PersonToDraw: TPerson; flag: boolean = True);
 begin
-  with MainForm.Canvas do
+  with MainForm.imgMain.Canvas do
   begin
     Pen.Width := 2;
     Pen.Color := clBlack;
@@ -872,7 +859,7 @@ end;
 procedure DrawEquipment(const EquipToDraw: TEquipment; colour: TColor;
   flag: boolean = True);
 begin
-  with MainForm.Canvas do
+  with MainForm.imgMain.Canvas do
   begin
 
     Pen.Color := colour;
@@ -1091,6 +1078,8 @@ begin
 
   MainForm.ClientWidth := 1920;
   MainForm.ClientHeight := 1080;
+  MainForm.imgMain.ClientWidth := 1920;
+  MainForm.imgMain.ClientHeight := 1080;
 
   mpVictoryMusic.FileName := 'morgen.mp3';
   mpClap.FileName := 'Clap.mp3';
@@ -1098,6 +1087,9 @@ begin
   xc_start := 850;
   yc_start := 250;
   k := 0.6;
+
+  InitVars(xc_start, yc_start, k);
+
   sign := True;
 
   timeStarter1.Interval := 1000;
@@ -1308,9 +1300,9 @@ end;
 
 procedure TMainForm.TrashTimer(Sender: TObject);
 begin
-  MainForm.Canvas.Pen.Color := RGB(random(255), random(255), random(255));
-  MainForm.Canvas.Brush.Color := RGB(random(255), random(255), random(255));
-  MainForm.Canvas.Ellipse(random(ClientWidth), random(ClientHeight),
+  MainForm.imgMain.Canvas.Pen.Color := RGB(random(255), random(255), random(255));
+  MainForm.imgMain.Canvas.Brush.Color := RGB(random(255), random(255), random(255));
+  MainForm.imgMain.Canvas.Ellipse(random(ClientWidth), random(ClientHeight),
     random(ClientWidth), random(ClientHeight))
 end;
 
@@ -1459,69 +1451,16 @@ begin
   else
     k := k - 0.02;
 
-  case i of
-    1:
-      PictureDraw1(Sender);
-    2:
-      PictureDraw2(Sender);
+  FrameHandler(i, k, sign, imgMain.Canvas);
 
-    3:
-
-      PictureDraw3(Sender);
-
-    4:
-      begin
-        PictureDraw4(Sender);
-        //mpClap.Play; // хлопок
-      end;
-
-    5:
-
-      PictureDraw5(Sender);
-    6:
-
-      PictureDraw6(Sender);
-
-    7:
-
-      PictureDraw7(Sender);
-
-    8:
-
-      PictureDraw8(Sender);
-
-    9:
-
-      PictureDraw9(Sender);
-
-    10:
-
-      PictureDraw10(Sender);
-
-    11:
-    begin
-      PictureDraw11(Sender);
-      //mpClap.Play; // хлопок
-    end;
-    12:
-
-      PictureDraw12(Sender);
-
-    13:
-
-      PictureDraw13(Sender);
-
-    14:
-
-      PictureDraw14(Sender);
-
-  end;
   // if i=14 then fps.Enabled:=false;
+
   if i = 14 then
   begin
     i := 0;
     sign := not sign;
   end;
+
 end;
 
 procedure TMainForm.timeDebugTimer(Sender: TObject);
@@ -1543,803 +1482,6 @@ begin
   timeStarter3.Enabled := False;
   Repaint;
 
-end;
-
-procedure PictureDraw1(Sender: TObject);
-var
-  xc, yc, xLb, yLb: integer;
-
-begin
-  MainForm.Canvas.Pen.Width := round(3 * k);
-  xc := xc_start;
-  yc := yc_start;
-  // head
-  MainForm.Canvas.Ellipse(xc - round(40 * k), yc - round(40 * k),
-    xc + round(40 * k), yc + round(40 * k));
-
-  // face
-  MainForm.Canvas.Ellipse(xc - round(17 * k), yc + round(6 * k),
-    xc - round(20 * k), yc + round(3 * k));
-  MainForm.Canvas.Ellipse(xc + round(17 * k), yc - round(2 * k),
-    xc + round(20 * k), yc - round(5 * k));
-  MainForm.Canvas.MoveTo(xc - round(20 * k), yc + round(18 * k));
-  MainForm.Canvas.LineTo(xc + round(25 * k), yc + round(5 * k));
-
-  // body
-  yc := yc + round(40 * k);
-  MainForm.Canvas.MoveTo(xc, yc);
-  MainForm.Canvas.LineTo(xc - round(20 * k), yc + round(160 * k));
-  xLb := xc - round(20 * k);
-  yLb := yc + round(160 * k);
-  // left hip
-  MainForm.Canvas.LineTo(xLb - round(30 * k), yLb + round(80 * k));
-  // left shin
-  MainForm.Canvas.LineTo(xLb - round(80 * k), yLb + round(180 * k));
-  // left foot
-  MainForm.Canvas.LineTo(xLb - round(30 * k), yLb + round(200 * k));
-  MainForm.Canvas.MoveTo(xLb, yLb);
-  // right hip
-  MainForm.Canvas.LineTo(xLb + round(90 * k), yLb + round(80 * k));
-  // right shin
-  MainForm.Canvas.LineTo(xLb + round(80 * k), yLb + round(180 * k));
-  // right foot
-  MainForm.Canvas.LineTo(xLb + round(110 * k), yLb + round(200 * k));
-  MainForm.Canvas.MoveTo(xc, yc);
-  // left shoulder
-  MainForm.Canvas.LineTo(xc - round(70 * k), yc + round(110 * k));
-  // left forearm
-  MainForm.Canvas.LineTo(xc + round(5 * k), yc + round(25 * k));
-  // left wrist
-  MainForm.Canvas.LineTo(xc + round(5 * k), yc + round(5 * k));
-  MainForm.Canvas.MoveTo(xc, yc);
-  // right shoulder
-  MainForm.Canvas.LineTo(xc + round(75 * k), yc - round(35 * k));
-  // right forearm
-  MainForm.Canvas.LineTo(xc + round(100 * k), yc - round(20 * k));
-  // right wrist
-  MainForm.Canvas.LineTo(xc + round(95 * k), yc);
-end;
-
-procedure PictureDraw2(Sender: TObject);
-var
-  xc, yc, xLb, yLb: integer;
-
-begin
-  MainForm.Canvas.Pen.Width := round(k * 3);
-  xc := xc_start;
-  yc := yc_start + round(10 * k);
-  // head
-  MainForm.Canvas.Ellipse(xc - round(40 * k), yc - round(40 * k),
-    xc + round(40 * k), yc + round(40 * k));
-  // face
-  MainForm.Canvas.Ellipse(xc - round(k * 12), yc - round(k * 5),
-    xc - round(k * 15), yc - round(k * 8));
-  MainForm.Canvas.Ellipse(xc + round(k * 20), yc - round(k * 15),
-    xc + round(k * 23), yc - round(k * 18));
-  MainForm.Canvas.MoveTo(xc - round(k * 5), yc + round(k * 2));
-  MainForm.Canvas.LineTo(xc + round(k * 25), yc - round(k * 10));
-  // body
-  yc := yc + round(k * 40);
-  MainForm.Canvas.MoveTo(xc, yc);
-  MainForm.Canvas.LineTo(xc, yc + round(k * 160));
-  xLb := xc;
-  yLb := yc + round(k * 160);
-  // left hip
-  MainForm.Canvas.LineTo(xLb - round(k * 30), yLb + round(k * 80));
-  // left shin
-  MainForm.Canvas.LineTo(xLb - round(k * 140), yLb + round(k * 50));
-  // left foot
-  MainForm.Canvas.LineTo(xLb - round(k * 150), yLb + round(k * 85));
-  MainForm.Canvas.MoveTo(xLb, yLb);
-  // right hip
-  MainForm.Canvas.LineTo(xLb + round(k * 70), yLb + round(k * 80));
-  // right shin
-  MainForm.Canvas.LineTo(xLb + round(k * 60), yLb + round(k * 180));
-  // right foot
-  MainForm.Canvas.LineTo(xLb + round(k * 90), yLb + round(k * 200));
-  MainForm.Canvas.MoveTo(xc, yc);
-  // left shoulder
-  MainForm.Canvas.LineTo(xc - round(k * 30), yc + round(k * 20));
-  // left forearm
-  MainForm.Canvas.LineTo(xc - round(k * 10), yc + round(k * 115));
-  // left wrist
-  MainForm.Canvas.LineTo(xc + round(k * 5), yc + round(k * 5));
-  MainForm.Canvas.MoveTo(xc, yc);
-  // right shoulder
-  MainForm.Canvas.LineTo(xc + round(k * 75), yc + round(k * 45));
-  // right forearm
-  MainForm.Canvas.LineTo(xc + round(k * 100), yc + round(k * 55));
-  // right wrist
-  MainForm.Canvas.LineTo(xc + round(k * 95), yc);
-end;
-
-procedure PictureDraw3(Sender: TObject);
-var
-  xc, yc, xLb, yLb: integer;
-
-begin
-  MainForm.Canvas.Pen.Width := round(k * 3);
-  xc := xc_start;
-  yc := yc_start;
-  // head
-  MainForm.Canvas.Ellipse(xc - round(k * 40), yc - round(k * 40),
-    xc + round(k * 40), yc + round(k * 40));
-
-  // face
-  MainForm.Canvas.Ellipse(xc - round(k * 12), yc + round(k * 6),
-    xc - round(k * 15), yc + round(k * 3));
-  MainForm.Canvas.Ellipse(xc + round(k * 20), yc - round(k * 2),
-    xc + round(k * 23), yc - round(k * 5));
-  MainForm.Canvas.MoveTo(xc - round(k * 20), yc + round(k * 18));
-  MainForm.Canvas.LineTo(xc + round(k * 5), yc + round(k * 15));
-  MainForm.Canvas.LineTo(xc + round(k * 25), yc + round(k * 5));
-
-  // body
-  yc := yc + round(k * 40);
-  MainForm.Canvas.MoveTo(xc, yc);
-  MainForm.Canvas.LineTo(xc + round(k * 20), yc + round(k * 145));
-  xLb := xc + round(k * 20);
-  yLb := yc + round(k * 145);
-  // left hip
-  MainForm.Canvas.LineTo(xLb - round(k * 30), yLb + round(k * 80));
-  // left shin
-  MainForm.Canvas.LineTo(xLb - round(k * 130), yLb + round(k * 10));
-  // left foot
-  MainForm.Canvas.LineTo(xLb - round(k * 140), yLb + round(k * 45));
-  MainForm.Canvas.MoveTo(xLb, yLb);
-  // right hip
-  MainForm.Canvas.LineTo(xLb + round(k * 70), yLb + round(k * 60));
-  // right shin
-  MainForm.Canvas.LineTo(xLb + round(k * 45), yLb + round(k * 180));
-  // right foot
-  MainForm.Canvas.LineTo(xLb + round(k * 90), yLb + round(k * 200));
-  MainForm.Canvas.MoveTo(xc, yc);
-  // left shoulder
-  MainForm.Canvas.LineTo(xc + round(k * 30), yc + round(k * 20));
-  // left forearm
-  MainForm.Canvas.LineTo(xc + round(k * 55), yc - round(k * 45));
-  // left wrist
-  MainForm.Canvas.LineTo(xc + round(k * 50), yc - round(k * 65));
-  MainForm.Canvas.MoveTo(xc, yc);
-  // right shoulder
-  MainForm.Canvas.LineTo(xc + round(k * 75), yc + round(k * 30));
-  // right forearm
-  MainForm.Canvas.LineTo(xc + round(k * 90), yc - round(k * 50));
-  // right wrist
-  MainForm.Canvas.LineTo(xc + round(k * 85), yc - round(k * 70));
-end;
-
-procedure PictureDraw4(Sender: TObject);
-var
-  xc, yc, xLb, yLb: integer;
-
-begin
-  MainForm.Canvas.Pen.Width := round(k * 3);
-  xc := xc_start;
-  yc := yc_start;
-  // head
-  MainForm.Canvas.Ellipse(xc - round(k * 40), yc - round(k * 40),
-    xc + round(k * 40), yc + round(k * 40));
-
-  // face
-  MainForm.Canvas.Ellipse(xc - round(k * 18), yc - round(k * 6),
-    xc - round(k * 15), yc - round(k * 3));
-  MainForm.Canvas.Ellipse(xc + round(k * 17), yc + round(k * 2),
-    xc + round(k * 20), yc + round(k * 5));
-  MainForm.Canvas.MoveTo(xc - round(k * 20), yc + round(k * 8));
-  MainForm.Canvas.LineTo(xc + round(k * 20), yc + round(k * 18));
-
-  // body
-  yc := yc + round(k * 40);
-  MainForm.Canvas.MoveTo(xc, yc);
-  MainForm.Canvas.LineTo(xc + round(k * 30), yc + round(k * 140));
-  xLb := xc + round(k * 30);
-  yLb := yc + round(k * 140);
-  // left hip
-  MainForm.Canvas.LineTo(xLb - round(k * 20), yLb + round(k * 80));
-  // left shin
-  MainForm.Canvas.LineTo(xLb - round(k * 100), yLb + round(k * 150));
-  // left foot
-  MainForm.Canvas.LineTo(xLb - round(k * 105), yLb + round(k * 185));
-  MainForm.Canvas.MoveTo(xLb, yLb);
-  // right hip
-  MainForm.Canvas.LineTo(xLb + round(k * 70), yLb + round(k * 60));
-  // right shin
-  MainForm.Canvas.LineTo(xLb + round(k * 45), yLb + round(k * 180));
-  // right foot
-  MainForm.Canvas.LineTo(xLb + round(k * 90), yLb + round(k * 200));
-  MainForm.Canvas.MoveTo(xc, yc);
-  // left shoulder
-  MainForm.Canvas.LineTo(xc + round(k * 30), yc + round(k * 70));
-  // left forearm
-  MainForm.Canvas.LineTo(xc + round(k * 45), yc - round(k * 15));
-  // left wrist
-  MainForm.Canvas.LineTo(xc + round(k * 45), yc - round(k * 45));
-  MainForm.Canvas.MoveTo(xc, yc);
-  // right shoulder
-  MainForm.Canvas.LineTo(xc + round(k * 75), yc + round(k * 45));
-  // right forearm
-  MainForm.Canvas.LineTo(xc + round(k * 47), yc - round(k * 15));
-  // right wrist
-  MainForm.Canvas.LineTo(xc + round(k * 47), yc - round(k * 45));
-  // clapEffect
-  MainForm.Canvas.MoveTo(xc + round(k * 60), yc - round(k * 55));
-  MainForm.Canvas.LineTo(xc + round(k * 75), yc - round(k * 80));
-  MainForm.Canvas.MoveTo(xc + round(k * 70), yc - round(k * 40));
-  MainForm.Canvas.LineTo(xc + round(k * 95), yc - round(k * 45));
-  MainForm.Canvas.MoveTo(xc + round(k * 60), yc - round(k * 25));
-  MainForm.Canvas.LineTo(xc + round(k * 85), yc - round(k * 5));
-  MainForm.Canvas.MoveTo(xc + round(k * 30), yc - round(k * 55));
-  MainForm.Canvas.LineTo(xc + round(k * 10), yc - round(k * 80));
-  MainForm.Canvas.MoveTo(xc + round(k * 30), yc - round(k * 40));
-  MainForm.Canvas.LineTo(xc + round(k * 10), yc - round(k * 45));
-  MainForm.Canvas.MoveTo(xc + round(k * 35), yc - round(k * 25));
-  MainForm.Canvas.LineTo(xc + round(k * 15), yc - round(k * 15));
-end;
-
-procedure PictureDraw5(Sender: TObject);
-var
-  xc, yc, xLb, yLb: integer;
-
-begin
-  MainForm.Canvas.Pen.Width := round(k * 3);
-  xc := xc_start;
-  yc := yc_start;
-  // head
-  MainForm.Canvas.Ellipse(xc - round(k * 40), yc - round(k * 40),
-    xc + round(k * 40), yc + round(k * 40));
-
-  // face
-  MainForm.Canvas.Ellipse(xc - round(k * 14), yc - round(k * 3),
-    xc - round(k * 11), yc);
-  MainForm.Canvas.Ellipse(xc + round(k * 20), yc - round(k * 3),
-    xc + round(k * 23), yc);
-  MainForm.Canvas.MoveTo(xc - round(k * 16), yc + round(k * 10));
-  MainForm.Canvas.LineTo(xc + round(k * 26), yc + round(k * 13));
-
-  // body
-  yc := yc + round(k * 40);
-  MainForm.Canvas.MoveTo(xc, yc);
-  MainForm.Canvas.LineTo(xc + round(k * 20), yc + round(k * 145));
-  xLb := xc + round(k * 20);
-  yLb := yc + round(k * 145);
-  // left hip
-  MainForm.Canvas.LineTo(xLb - round(k * 20), yLb + round(k * 80));
-  // left shin
-  MainForm.Canvas.LineTo(xLb - round(k * 60), yLb + round(k * 195));
-  // left foot
-  MainForm.Canvas.LineTo(xLb - round(k * 25), yLb + round(k * 200));
-  MainForm.Canvas.MoveTo(xLb, yLb);
-  // right hip
-  MainForm.Canvas.LineTo(xLb + round(k * 70), yLb + round(k * 60));
-  // right shin
-  MainForm.Canvas.LineTo(xLb + round(k * 45), yLb + round(k * 180));
-  // right foot
-  MainForm.Canvas.LineTo(xLb + round(k * 90), yLb + round(k * 200));
-  MainForm.Canvas.MoveTo(xc, yc);
-  // left shoulder
-  MainForm.Canvas.LineTo(xc - round(k * 25), yc + round(k * 90));
-  // left forearm
-  MainForm.Canvas.LineTo(xc + round(k * 45), yc + round(k * 25));
-  // left wrist
-  MainForm.Canvas.LineTo(xc + round(k * 50), yc + round(k * 50));
-  MainForm.Canvas.MoveTo(xc, yc);
-  // right shoulder
-  MainForm.Canvas.LineTo(xc + round(k * 68), yc + round(k * 55));
-  // right forearm
-  MainForm.Canvas.LineTo(xc + round(k * 43), yc - round(k * 15));
-  // right wrist
-  MainForm.Canvas.LineTo(xc + round(k * 15), yc);
-end;
-
-procedure PictureDraw6(Sender: TObject);
-var
-  xc, yc, xLb, yLb: integer;
-
-begin
-  MainForm.Canvas.Pen.Width := round(k * 3);
-  xc := xc_start;
-  yc := yc_start;
-  // head
-  MainForm.Canvas.Ellipse(xc - round(k * 40), yc - round(k * 40),
-    xc + round(k * 40), yc + round(k * 40));
-
-  // face
-  MainForm.Canvas.Ellipse(xc - round(k * 22), yc - round(k * 7),
-    xc - round(k * 19), yc - round(k * 4));
-  MainForm.Canvas.Ellipse(xc + round(k * 13), yc - round(k * 3),
-    xc + round(k * 15), yc);
-  MainForm.Canvas.MoveTo(xc - round(k * 27), yc + round(k * 10));
-  MainForm.Canvas.LineTo(xc + round(k * 2), yc + round(k * 13));
-  MainForm.Canvas.LineTo(xc + round(k * 22), yc + round(k * 12));
-
-  // body
-  yc := yc + round(k * 40);
-  MainForm.Canvas.MoveTo(xc, yc);
-  MainForm.Canvas.LineTo(xc, yc + round(k * 150));
-  xLb := xc;
-  yLb := yc + round(k * 150);
-  // left hip
-  MainForm.Canvas.LineTo(xLb - round(k * 35), yLb + round(k * 90));
-  // left shin
-  MainForm.Canvas.LineTo(xLb - round(k * 25), yLb + round(k * 160));
-  // left foot
-  MainForm.Canvas.LineTo(xLb - round(k * 35), yLb + round(k * 175));
-  MainForm.Canvas.MoveTo(xLb, yLb);
-  // right hip
-  MainForm.Canvas.LineTo(xLb + round(k * 65), yLb + round(k * 60));
-  // right shin
-  MainForm.Canvas.LineTo(xLb + round(k * 45), yLb + round(k * 200));
-  // right foot
-  MainForm.Canvas.LineTo(xLb + round(k * 80), yLb + round(k * 200));
-  MainForm.Canvas.MoveTo(xc, yc);
-  // left shoulder
-  MainForm.Canvas.LineTo(xc - round(k * 65), yc + round(k * 80));
-  // left forearm
-  MainForm.Canvas.LineTo(xc - round(k * 60), yc + round(k * 140));
-  // left wrist
-  MainForm.Canvas.LineTo(xc - round(k * 45), yc + round(k * 150));
-  MainForm.Canvas.MoveTo(xc, yc);
-  // right shoulder
-  MainForm.Canvas.LineTo(xc + round(k * 38), yc + round(k * 95));
-  // right forearm
-  MainForm.Canvas.LineTo(xc - round(k * 20), yc + round(k * 45));
-  // right wrist
-  MainForm.Canvas.LineTo(xc - round(k * 35), yc + round(k * 55));
-end;
-
-procedure PictureDraw7(Sender: TObject);
-var
-  xc, yc, xLb, yLb: integer;
-
-begin
-  MainForm.Canvas.Pen.Width := round(k * 3);
-  xc := xc_start;
-  yc := yc_start;
-  // head
-  MainForm.Canvas.Ellipse(xc - round(k * 40), yc - round(k * 40),
-    xc + round(k * 40), yc + round(k * 40));
-
-  // face
-  MainForm.Canvas.Ellipse(xc - round(k * 25), yc - round(k * 1),
-    xc - round(k * 22), yc - round(k * 4));
-  MainForm.Canvas.Ellipse(xc + round(k * 10), yc, xc + round(k * 13),
-    yc + round(k * 3));
-  MainForm.Canvas.MoveTo(xc - round(k * 27), yc + round(k * 10));
-  MainForm.Canvas.LineTo(xc + round(k * 17), yc + round(k * 12));
-
-  // body
-  yc := yc + round(k * 40);
-  MainForm.Canvas.MoveTo(xc, yc);
-  MainForm.Canvas.LineTo(xc, yc + round(k * 150));
-  xLb := xc;
-  yLb := yc + round(k * 150);
-  // left hip
-  MainForm.Canvas.LineTo(xLb - round(k * 35), yLb + round(k * 90));
-  // left shin
-  MainForm.Canvas.LineTo(xLb - round(k * 25), yLb + round(k * 180));
-  // left foot
-  MainForm.Canvas.LineTo(xLb - round(k * 35), yLb + round(k * 195));
-  MainForm.Canvas.MoveTo(xLb, yLb);
-  // right hip
-  MainForm.Canvas.LineTo(xLb + round(k * 65), yLb + round(k * 60));
-  // right shin
-  MainForm.Canvas.LineTo(xLb + round(k * 45), yLb + round(k * 200));
-  // right foot
-  MainForm.Canvas.LineTo(xLb + round(k * 80), yLb + round(k * 200));
-  MainForm.Canvas.MoveTo(xc, yc);
-  // left shoulder
-  MainForm.Canvas.LineTo(xc - round(k * 70), yc - round(k * 5));
-  // left forearm
-  MainForm.Canvas.LineTo(xc - round(k * 120), yc + round(k * 40));
-  // left wrist
-  MainForm.Canvas.LineTo(xc - round(k * 120), yc + round(k * 45));
-  MainForm.Canvas.MoveTo(xc, yc);
-  // right shoulder
-  MainForm.Canvas.LineTo(xc + round(k * 30), yc + round(k * 55));
-  // right forearm
-  MainForm.Canvas.LineTo(xc - round(k * 50), yc + round(k * 40));
-  // right wrist
-  MainForm.Canvas.LineTo(xc - round(k * 65), yc + round(k * 45));
-end;
-
-procedure PictureDraw8(Sender: TObject);
-var
-  xc, yc, xLb, yLb: integer;
-
-begin
-  MainForm.Canvas.Pen.Width := round(k * 3);
-  xc := xc_start;
-  yc := yc_start - round(k * 10);
-  // head
-  MainForm.Canvas.Ellipse(xc - round(k * 40), yc - round(k * 40),
-    xc + round(k * 40), yc + round(k * 40));
-
-  // face
-  MainForm.Canvas.Ellipse(xc - round(k * 17), yc + round(k * 6),
-    xc - round(k * 20), yc + round(k * 3));
-  MainForm.Canvas.Ellipse(xc + round(k * 17), yc - round(k * 2),
-    xc + round(k * 20), yc - round(k * 5));
-  MainForm.Canvas.MoveTo(xc - round(k * 20), yc + round(k * 18));
-  MainForm.Canvas.LineTo(xc + round(k * 25), yc + round(k * 5));
-
-  // body
-  yc := yc + round(k * 40);
-  MainForm.Canvas.MoveTo(xc, yc);
-  MainForm.Canvas.LineTo(xc + round(k * 20), yc + round(k * 160));
-  xLb := xc + round(k * 20);
-  yLb := yc + round(k * 160);
-  // left hip
-  MainForm.Canvas.LineTo(xLb + round(k * 30), yLb + round(k * 80));
-  // left shin
-  MainForm.Canvas.LineTo(xLb + round(k * 80), yLb + round(k * 180));
-  // left foot
-  MainForm.Canvas.LineTo(xLb + round(k * 30), yLb + round(k * 200));
-  MainForm.Canvas.MoveTo(xLb, yLb);
-  // right hip
-  MainForm.Canvas.LineTo(xLb - round(k * 90), yLb + round(k * 80));
-  // right shin
-  MainForm.Canvas.LineTo(xLb - round(k * 80), yLb + round(k * 180));
-  // right foot
-  MainForm.Canvas.LineTo(xLb - round(k * 110), yLb + round(k * 200));
-  MainForm.Canvas.MoveTo(xc, yc);
-  // left shoulder
-  MainForm.Canvas.LineTo(xc + round(k * 70), yc + round(k * 110));
-  // left forearm
-  MainForm.Canvas.LineTo(xc - round(k * 5), yc + round(k * 25));
-  // left wrist
-  MainForm.Canvas.LineTo(xc - round(k * 5), yc + round(k * 5));
-  MainForm.Canvas.MoveTo(xc, yc);
-  // right shoulder
-  MainForm.Canvas.LineTo(xc - round(k * 75), yc - round(k * 35));
-  // right forearm
-  MainForm.Canvas.LineTo(xc - round(k * 100), yc - round(k * 20));
-  // right wrist
-  MainForm.Canvas.LineTo(xc - round(k * 95), yc);
-end;
-
-procedure PictureDraw9(Sender: TObject);
-var
-  xc, yc, xLb, yLb: integer;
-
-begin
-  MainForm.Canvas.Pen.Width := round(k * 3);
-  xc := xc_start;
-  yc := yc_start + round(k * 10);
-  // head
-  MainForm.Canvas.Ellipse(xc - round(k * 40), yc - round(k * 40),
-    xc + round(k * 40), yc + round(k * 40));
-  // face
-  MainForm.Canvas.Ellipse(xc + round(k * 12), yc - round(k * 5),
-    xc + round(k * 15), yc - round(k * 8));
-  MainForm.Canvas.Ellipse(xc - round(k * 20), yc - round(k * 15),
-    xc - round(k * 23), yc - round(k * 18));
-  MainForm.Canvas.MoveTo(xc + round(k * 5), yc + round(k * 2));
-  MainForm.Canvas.LineTo(xc - round(k * 25), yc - round(k * 10));
-  // body
-  yc := yc + round(k * 40);
-  MainForm.Canvas.MoveTo(xc, yc);
-  MainForm.Canvas.LineTo(xc, yc + round(k * 160));
-  xLb := xc;
-  yLb := yc + round(k * 160);
-  // left hip
-  MainForm.Canvas.LineTo(xLb + round(k * 30), yLb + round(k * 80));
-  // left shin
-  MainForm.Canvas.LineTo(xLb + round(k * 140), yLb + round(k * 50));
-  // left foot
-  MainForm.Canvas.LineTo(xLb + round(k * 150), yLb + round(k * 85));
-  MainForm.Canvas.MoveTo(xLb, yLb);
-  // right hip
-  MainForm.Canvas.LineTo(xLb - round(k * 70), yLb + round(k * 80));
-  // right shin
-  MainForm.Canvas.LineTo(xLb - round(k * 60), yLb + round(k * 180));
-  // right foot
-  MainForm.Canvas.LineTo(xLb - round(k * 90), yLb + round(k * 200));
-  MainForm.Canvas.MoveTo(xc, yc);
-  // left shoulder
-  MainForm.Canvas.LineTo(xc + round(k * 30), yc + round(k * 20));
-  // left forearm
-
-  MainForm.Canvas.LineTo(xc + round(k * 10), yc + round(k * 115));
-  // left wrist
-  MainForm.Canvas.LineTo(xc - round(k * 5), yc + round(k * 5));
-  MainForm.Canvas.MoveTo(xc, yc);
-  // right shoulder
-  MainForm.Canvas.LineTo(xc - round(k * 75), yc + round(k * 45));
-  // right forearm
-  MainForm.Canvas.LineTo(xc - round(k * 100), yc + round(k * 55));
-  // right wrist
-  MainForm.Canvas.LineTo(xc - round(k * 95), yc);
-end;
-
-procedure PictureDraw10(Sender: TObject);
-var
-  xc, yc, xLb, yLb: integer;
-
-begin
-  MainForm.Canvas.Pen.Width := round(k * 3);
-  xc := xc_start;
-  yc := yc_start;
-  // head
-  MainForm.Canvas.Ellipse(xc - round(k * 40), yc - round(k * 40),
-    xc + round(k * 40), yc + round(k * 40));
-
-  // face
-  MainForm.Canvas.Ellipse(xc + round(k * 12), yc + round(k * 6),
-    xc + round(k * 15), yc + round(k * 3));
-  MainForm.Canvas.Ellipse(xc - round(k * 20), yc - round(k * 2),
-    xc - round(k * 23), yc - round(k * 5));
-  MainForm.Canvas.MoveTo(xc + round(k * 20), yc + round(k * 18));
-  MainForm.Canvas.LineTo(xc - round(k * 5), yc + round(k * 15));
-  MainForm.Canvas.LineTo(xc - round(k * 25), yc + round(k * 5));
-
-  // body
-  yc := yc + round(k * 40);
-  MainForm.Canvas.MoveTo(xc, yc);
-  MainForm.Canvas.LineTo(xc - round(k * 20), yc + round(k * 145));
-  xLb := xc - round(k * 20);
-  yLb := yc + round(k * 145);
-  // left hip
-  MainForm.Canvas.LineTo(xLb + round(k * 30), yLb + round(k * 80));
-  // left shin
-  MainForm.Canvas.LineTo(xLb + round(k * 130), yLb + round(k * 10));
-  // left foot
-  MainForm.Canvas.LineTo(xLb + round(k * 140), yLb + round(k * 45));
-  MainForm.Canvas.MoveTo(xLb, yLb);
-  // right hip
-  MainForm.Canvas.LineTo(xLb - round(k * 70), yLb + round(k * 60));
-  // right shin
-  MainForm.Canvas.LineTo(xLb - round(k * 45), yLb + round(k * 180));
-  // right foot
-  MainForm.Canvas.LineTo(xLb - round(k * 90), yLb + round(k * 200));
-  MainForm.Canvas.MoveTo(xc, yc);
-  // left shoulder
-  MainForm.Canvas.LineTo(xc - round(k * 30), yc + round(k * 20));
-  // left forearm
-  MainForm.Canvas.LineTo(xc - round(k * 55), yc - round(k * 45));
-  // left wrist
-  MainForm.Canvas.LineTo(xc - round(k * 50), yc - round(k * 65));
-  MainForm.Canvas.MoveTo(xc, yc);
-  // right shoulder
-  MainForm.Canvas.LineTo(xc - round(k * 75), yc + round(k * 30));
-  // right forearm
-  MainForm.Canvas.LineTo(xc - round(k * 90), yc - round(k * 50));
-  // right wrist
-  MainForm.Canvas.LineTo(xc - round(k * 85), yc - round(k * 70));
-end;
-
-procedure PictureDraw11(Sender: TObject);
-var
-  xc, yc, xLb, yLb: integer;
-
-begin
-  MainForm.Canvas.Pen.Width := round(k * 3);
-  xc := xc_start;
-  yc := yc_start;
-  // head
-  MainForm.Canvas.Ellipse(xc - round(k * 40), yc - round(k * 40),
-    xc + round(k * 40), yc + round(k * 40));
-
-  // face
-  MainForm.Canvas.Ellipse(xc + round(k * 18), yc - round(k * 6),
-    xc + round(k * 15), yc - round(k * 3));
-  MainForm.Canvas.Ellipse(xc - round(k * 17), yc + round(k * 2),
-    xc - round(k * 20), yc + round(k * 5));
-  MainForm.Canvas.MoveTo(xc + round(k * 20), yc + round(k * 8));
-  MainForm.Canvas.LineTo(xc - round(k * 20), yc + round(k * 18));
-
-  // body
-  yc := yc + round(k * 40);
-  MainForm.Canvas.MoveTo(xc, yc);
-  MainForm.Canvas.LineTo(xc - round(k * 30), yc + round(k * 140));
-  xLb := xc - round(k * 30);
-  yLb := yc + round(k * 140);
-  // left hip
-  MainForm.Canvas.LineTo(xLb + round(k * 20), yLb + round(k * 80));
-  // left shin
-  MainForm.Canvas.LineTo(xLb + round(k * 100), yLb + round(k * 150));
-  // left foot
-  MainForm.Canvas.LineTo(xLb + round(k * 105), yLb + round(k * 185));
-  MainForm.Canvas.MoveTo(xLb, yLb);
-  // right hip
-  MainForm.Canvas.LineTo(xLb - round(k * 70), yLb + round(k * 60));
-  // right shin
-  MainForm.Canvas.LineTo(xLb - round(k * 45), yLb + round(k * 180));
-  // right foot
-  MainForm.Canvas.LineTo(xLb - round(k * 90), yLb + round(k * 200));
-  MainForm.Canvas.MoveTo(xc, yc);
-  // left shoulder
-  MainForm.Canvas.LineTo(xc - round(k * 30), yc + round(k * 70));
-  // left forearm
-  MainForm.Canvas.LineTo(xc - round(k * 45), yc - round(k * 15));
-  // left wrist
-  MainForm.Canvas.LineTo(xc - round(k * 45), yc - round(k * 45));
-  MainForm.Canvas.MoveTo(xc, yc);
-  // right shoulder
-  MainForm.Canvas.LineTo(xc - round(k * 75), yc + round(k * 45));
-  // right forearm
-  MainForm.Canvas.LineTo(xc - round(k * 47), yc - round(k * 15));
-  // right wrist
-  MainForm.Canvas.LineTo(xc - round(k * 47), yc - round(k * 45));
-  // clapEffect
-  MainForm.Canvas.MoveTo(xc - round(k * 60), yc - round(k * 55));
-  MainForm.Canvas.LineTo(xc - round(k * 75), yc - round(k * 80));
-  MainForm.Canvas.MoveTo(xc - round(k * 70), yc - round(k * 40));
-  MainForm.Canvas.LineTo(xc - round(k * 95), yc - round(k * 45));
-  MainForm.Canvas.MoveTo(xc - round(k * 60), yc - round(k * 25));
-  MainForm.Canvas.LineTo(xc - round(k * 85), yc - round(k * 5));
-  MainForm.Canvas.MoveTo(xc - round(k * 30), yc - round(k * 55));
-  MainForm.Canvas.LineTo(xc - round(k * 10), yc - round(k * 80));
-  MainForm.Canvas.MoveTo(xc - round(k * 30), yc - round(k * 40));
-  MainForm.Canvas.LineTo(xc - round(k * 10), yc - round(k * 45));
-  MainForm.Canvas.MoveTo(xc - round(k * 35), yc - round(k * 25));
-  MainForm.Canvas.LineTo(xc - round(k * 15), yc - round(k * 15));
-end;
-
-procedure PictureDraw12(Sender: TObject);
-var
-  xc, yc, xLb, yLb: integer;
-
-begin
-  MainForm.Canvas.Pen.Width := round(k * 3);
-  xc := xc_start;
-  yc := yc_start;
-  // head
-  MainForm.Canvas.Ellipse(xc - round(k * 40), yc - round(k * 40),
-    xc + round(k * 40), yc + round(k * 40));
-
-  // face
-  MainForm.Canvas.Ellipse(xc + round(k * 14), yc - round(k * 3),
-    xc + round(k * 11), yc);
-  MainForm.Canvas.Ellipse(xc - round(k * 20), yc - round(k * 3),
-    xc - round(k * 23), yc);
-  MainForm.Canvas.MoveTo(xc + round(k * 16), yc + round(k * 10));
-  MainForm.Canvas.LineTo(xc - round(k * 26), yc + round(k * 13));
-
-  // body
-  yc := yc + round(k * 40);
-  MainForm.Canvas.MoveTo(xc, yc);
-  MainForm.Canvas.LineTo(xc - round(k * 20), yc + round(k * 145));
-  xLb := xc - round(k * 20);
-  yLb := yc + round(k * 145);
-  // left hip
-  MainForm.Canvas.LineTo(xLb + round(k * 20), yLb + round(k * 80));
-  // left shin
-  MainForm.Canvas.LineTo(xLb + round(k * 60), yLb + round(k * 195));
-  // left foot
-  MainForm.Canvas.LineTo(xLb + round(k * 25), yLb + round(k * 200));
-  MainForm.Canvas.MoveTo(xLb, yLb);
-  // right hip
-  MainForm.Canvas.LineTo(xLb - round(k * 70), yLb + round(k * 60));
-  // right shin
-  MainForm.Canvas.LineTo(xLb - round(k * 45), yLb + round(k * 180));
-  // right foot
-  MainForm.Canvas.LineTo(xLb - round(k * 90), yLb + round(k * 200));
-  MainForm.Canvas.MoveTo(xc, yc);
-  // left shoulder
-  MainForm.Canvas.LineTo(xc + round(k * 25), yc + round(k * 90));
-  // left forearm
-  MainForm.Canvas.LineTo(xc - round(k * 45), yc + round(k * 25));
-  // left wrist
-  MainForm.Canvas.LineTo(xc - round(k * 50), yc + round(k * 50));
-  MainForm.Canvas.MoveTo(xc, yc);
-  // right shoulder
-  MainForm.Canvas.LineTo(xc - round(k * 68), yc + round(k * 55));
-  // right forearm
-  MainForm.Canvas.LineTo(xc - round(k * 43), yc - round(k * 15));
-  // right wrist
-  MainForm.Canvas.LineTo(xc - round(k * 15), yc);
-end;
-
-procedure PictureDraw13(Sender: TObject);
-var
-  xc, yc, xLb, yLb: integer;
-
-begin
-  MainForm.Canvas.Pen.Width := round(k * 3);
-  xc := xc_start;
-  yc := yc_start;
-  // head
-  MainForm.Canvas.Ellipse(xc - round(k * 40), yc - round(k * 40),
-    xc + round(k * 40), yc + round(k * 40));
-
-  // face
-  MainForm.Canvas.Ellipse(xc + round(k * 22), yc - round(k * 7),
-    xc + round(k * 19), yc - round(k * 4));
-  MainForm.Canvas.Ellipse(xc - round(k * 13), yc - round(k * 3),
-    xc - round(k * 15), yc);
-  MainForm.Canvas.MoveTo(xc + round(k * 27), yc + round(k * 10));
-  MainForm.Canvas.LineTo(xc - round(k * 2), yc + round(k * 13));
-  MainForm.Canvas.LineTo(xc - round(k * 22), yc + round(k * 12));
-
-  // body
-  yc := yc + round(k * 40);
-  MainForm.Canvas.MoveTo(xc, yc);
-  MainForm.Canvas.LineTo(xc, yc + round(k * 150));
-  xLb := xc;
-  yLb := yc + round(k * 150);
-  // left hip
-  MainForm.Canvas.LineTo(xLb + round(k * 35), yLb + round(k * 90));
-  // left shin
-  MainForm.Canvas.LineTo(xLb + round(k * 25), yLb + round(k * 160));
-  // left foot
-  MainForm.Canvas.LineTo(xLb + round(k * 35), yLb + round(k * 175));
-  MainForm.Canvas.MoveTo(xLb, yLb);
-  // right hip
-  MainForm.Canvas.LineTo(xLb - round(k * 65), yLb + round(k * 60));
-  // right shin
-  MainForm.Canvas.LineTo(xLb - round(k * 45), yLb + round(k * 200));
-  // right foot
-  MainForm.Canvas.LineTo(xLb - round(k * 80), yLb + round(k * 200));
-  MainForm.Canvas.MoveTo(xc, yc);
-  // left shoulder
-  MainForm.Canvas.LineTo(xc + round(k * 65), yc + round(k * 80));
-  // left forearm
-  MainForm.Canvas.LineTo(xc + round(k * 60), yc + round(k * 140));
-  // left wrist
-  MainForm.Canvas.LineTo(xc + round(k * 45), yc + round(k * 150));
-  MainForm.Canvas.MoveTo(xc, yc);
-  // right shoulder
-  MainForm.Canvas.LineTo(xc - round(k * 38), yc + round(k * 95));
-  // right forearm
-  MainForm.Canvas.LineTo(xc + round(k * 20), yc + round(k * 45));
-  // right wrist
-  MainForm.Canvas.LineTo(xc + round(k * 35), yc + round(k * 55));
-end;
-
-procedure PictureDraw14(Sender: TObject);
-var
-  xc, yc, xLb, yLb: integer;
-
-begin
-  MainForm.Canvas.Pen.Width := round(k * 3);
-  xc := xc_start;
-  yc := yc_start;
-  // head
-  MainForm.Canvas.Ellipse(xc - round(k * 40), yc - round(k * 40),
-    xc + round(k * 40), yc + round(k * 40));
-
-  // face
-  MainForm.Canvas.Ellipse(xc + round(k * 25), yc - round(k * 1),
-    xc + round(k * 22), yc - round(k * 4));
-  MainForm.Canvas.Ellipse(xc - round(k * 10), yc, xc - round(k * 13),
-    yc + round(k * 3));
-  MainForm.Canvas.MoveTo(xc + round(k * 27), yc + round(k * 10));
-  MainForm.Canvas.LineTo(xc - round(k * 17), yc + round(k * 12));
-
-  // body
-  yc := yc + round(k * 40);
-  MainForm.Canvas.MoveTo(xc, yc);
-  MainForm.Canvas.LineTo(xc, yc + round(k * 150));
-  xLb := xc;
-  yLb := yc + round(k * 150);
-  // left hip
-  MainForm.Canvas.LineTo(xLb + round(k * 35), yLb + round(k * 90));
-  // left shin
-  MainForm.Canvas.LineTo(xLb + round(k * 25), yLb + round(k * 180));
-  // left foot
-  MainForm.Canvas.LineTo(xLb + round(k * 35), yLb + round(k * 195));
-  MainForm.Canvas.MoveTo(xLb, yLb);
-  // right hip
-  MainForm.Canvas.LineTo(xLb - round(k * 65), yLb + round(k * 60));
-  // right shin
-  MainForm.Canvas.LineTo(xLb - round(k * 45), yLb + round(k * 200));
-  // right foot
-  MainForm.Canvas.LineTo(xLb - round(k * 80), yLb + round(k * 200));
-  MainForm.Canvas.MoveTo(xc, yc);
-  // left shoulder
-  MainForm.Canvas.LineTo(xc + round(k * 70), yc - round(k * 5));
-  // left forearm
-  MainForm.Canvas.LineTo(xc + round(k * 120), yc + round(k * 40));
-  // left wrist
-  MainForm.Canvas.LineTo(xc + round(k * 120), yc + round(k * 45));
-  MainForm.Canvas.MoveTo(xc, yc);
-  // right shoulder
-  MainForm.Canvas.LineTo(xc - round(k * 30), yc + round(k * 55));
-  // right forearm
-  MainForm.Canvas.LineTo(xc + round(k * 50), yc + round(k * 40));
-  // right wrist
-  MainForm.Canvas.LineTo(xc + round(k * 65), yc + round(k * 45));
 end;
 
 end.

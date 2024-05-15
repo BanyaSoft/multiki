@@ -6,7 +6,8 @@ uses
   DataTypes in 'DataTypes.pas',
   AudioRoutine in 'AudioRoutine.pas',
   AnimationRoutine in 'AnimationRoutine.pas',
-  StaticImageRoutine in 'StaticImageRoutine.pas';
+  StaticImageRoutine in 'StaticImageRoutine.pas',
+  Dance in 'Dance.pas';
 
 {$R *.res}
 
