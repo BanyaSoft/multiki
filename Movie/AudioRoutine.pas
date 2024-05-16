@@ -3,11 +3,17 @@ unit AudioRoutine;
 interface
 
 uses
-  DataTypes;
+  DataTypes, MainUnit;
+procedure ClapSoundPlay();
 
 implementation
 
 uses
   MMSYSTEM;
+
+procedure ClapSoundPlay();
+begin
+  MainForm.mpClap.Play;
+end;
 
 end.

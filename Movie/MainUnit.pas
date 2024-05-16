@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics, System.Types,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls,
-  DataTypes, AudioRoutine, Vcl.MPlayer, Math, Dance;
+  DataTypes, Vcl.MPlayer, Math, Dance;
 
 type
   TMainForm = class(TForm)
@@ -82,8 +82,8 @@ var
   angleRightArm1, angleLeftArm1, angleRightArm2, angleLeftArm2: TAnglesArm;
   angle1, angle2, baseAngle1, baseAngle2, angleRotated1, angleRotated2: single;
 
-  currLeft, currRight, prevLeft, prevRight, stayLeft, stayRight, stayEnding, stayLeft1, stayRight1,
-    leg: TPoint;
+  currLeft, currRight, prevLeft, prevRight, stayLeft, stayRight, stayEnding,
+    stayLeft1, stayRight1, leg: TPoint;
 
   angleEnding: single;
   dlength, length, framesAmount, lengthLeg, lengthFeet, Radius: integer;
@@ -112,7 +112,8 @@ procedure InitMovieBorders;
 var
   Borders: TRect;
 begin
-  Borders.Create(TPoint.Create(GlobalX, GlobalY), TPoint.Create(LengthX - GlobalX, LengthY - GlobalY));
+  Borders.Create(TPoint.Create(GlobalX, GlobalY),
+    TPoint.Create(LengthX - GlobalX, LengthY - GlobalY));
 
   with MainForm.imgMain.Canvas do
   begin
@@ -147,13 +148,15 @@ begin
     Fence[0] := TPoint.Create(GlobalX + 3 * LengthX div 8, 3 * GlobalY div 2);
     Fence[1] := TPoint.Create(GlobalX + 3 * LengthX div 8, 2 * GlobalY);
     Fence[2] := TPoint.Create(GlobalX + LengthX div 8, LengthY - GlobalY);
-    Fence[3] := TPoint.Create(GlobalX + LengthX div 8, LengthY - 5 * GlobalY div 2);
+    Fence[3] := TPoint.Create(GlobalX + LengthX div 8,
+      LengthY - 5 * GlobalY div 2);
     Polygon(Fence);
 
     Fence[0] := TPoint.Create(GlobalX + 5 * LengthX div 8, 3 * GlobalY div 2);
     Fence[1] := TPoint.Create(GlobalX + 5 * LengthX div 8, 2 * GlobalY);
     Fence[2] := TPoint.Create(GlobalX + 7 * LengthX div 8, LengthY - GlobalY);
-    Fence[3] := TPoint.Create(GlobalX + 7 * LengthX div 8, LengthY - 5 * GlobalY div 2);
+    Fence[3] := TPoint.Create(GlobalX + 7 * LengthX div 8,
+      LengthY - 5 * GlobalY div 2);
     Polygon(Fence);
 
     MoveTo(GlobalX + 3 * LengthX div 8, 2 * GlobalY);
@@ -165,13 +168,15 @@ begin
       MoveTo(GlobalX + 7 * LengthX div 8, GlobalY + LengthY - 50 - 200);
       LineTo(GlobalX + 7 * LengthX div 8, GlobalY + LengthY - 50);
     }
-    Fence[0] := TPoint.Create(GlobalX + LengthX div 8, LengthY - 5 * GlobalY div 2);
+    Fence[0] := TPoint.Create(GlobalX + LengthX div 8,
+      LengthY - 5 * GlobalY div 2);
     Fence[1] := TPoint.Create(GlobalX + LengthX div 8, LengthY - GlobalY);
     Fence[2] := TPoint.Create(GlobalX, LengthY - GlobalY);
     Fence[3] := TPoint.Create(GlobalX, LengthY - 5 * GlobalY div 2);
     Polygon(Fence);
 
-    Fence[0] := TPoint.Create(GlobalX + 7 * LengthX div 8, LengthY - 5 * GlobalY div 2);
+    Fence[0] := TPoint.Create(GlobalX + 7 * LengthX div 8,
+      LengthY - 5 * GlobalY div 2);
     Fence[1] := TPoint.Create(GlobalX + 7 * LengthX div 8, LengthY - GlobalY);
     Fence[2] := TPoint.Create(LengthX - GlobalX, LengthY - GlobalY);
     Fence[3] := TPoint.Create(LengthX - GlobalX, LengthY - 5 * GlobalY div 2);
@@ -197,14 +202,16 @@ begin
     Brush.Color := clWebSaddleBrown;
     Brush.Style := bsSolid;
 
-    Polygon([Point(x - 10, y - 50), Point(x - 10, y), Point(x - 90, y), Point(x - 90, y - 50)]);
+    Polygon([Point(x - 10, y - 50), Point(x - 10, y), Point(x - 90, y),
+      Point(x - 90, y - 50)]);
 
     Pen.Width := 5;
     Pen.Color := clWebDarkgreen;
     Brush.Color := clWebDarkgreen;
 
-    Polygon([Point(x, y - 210), Point(x - 20, y - 210), Point(x + 50, y - 140), Point(x + 30, y - 140),
-      Point(x + 100 - 10, y - 50), Point(x - 200, y - 50), Point(x - 130, y - 140), Point(x - 150, y - 140),
+    Polygon([Point(x, y - 210), Point(x - 20, y - 210), Point(x + 50, y - 140),
+      Point(x + 30, y - 140), Point(x + 100 - 10, y - 50),
+      Point(x - 200, y - 50), Point(x - 130, y - 140), Point(x - 150, y - 140),
       Point(x - 80, y - 210), Point(x - 100, y - 210), Point(x - 50, y - 260)]);
 
     Pen.Width := 4;
@@ -212,9 +219,11 @@ begin
     Brush.Color := clWhite;
     Brush.Style := bsClear;
 
-    PolyLine([Point(x, y - 210), Point(x - 20, y - 210), Point(x + 50, y - 140), Point(x + 30, y - 140),
-      Point(x + 100 - 10, y - 50), Point(x - 200, y - 50), Point(x - 130, y - 140), Point(x - 150, y - 140),
-      Point(x - 80, y - 210), Point(x - 100, y - 210), Point(x - 50, y - 260), Point(x, y - 210)]);
+    PolyLine([Point(x, y - 210), Point(x - 20, y - 210), Point(x + 50, y - 140),
+      Point(x + 30, y - 140), Point(x + 100 - 10, y - 50),
+      Point(x - 200, y - 50), Point(x - 130, y - 140), Point(x - 150, y - 140),
+      Point(x - 80, y - 210), Point(x - 100, y - 210), Point(x - 50, y - 260),
+      Point(x, y - 210)]);
     case n of
       1:
         begin
@@ -318,16 +327,24 @@ begin
     Brush.Color := clBlack;
     Brush.Style := bsCross;
 
-    Fence[0] := TPoint.Create(GlobalX + lenUnit, LengthY - GlobalY - lenUnit * 20 + 20);
-    Fence[1] := TPoint.Create(GlobalX + lenUnit * 90, LengthY - GlobalY - lenUnit * 10 + 20);
-    Fence[2] := TPoint.Create(GlobalX + lenUnit * 90, LengthY - GlobalY - lenUnit * 2 + 20);
-    Fence[3] := TPoint.Create(GlobalX + lenUnit, LengthY - GlobalY - lenUnit * 12 + 20);
+    Fence[0] := TPoint.Create(GlobalX + lenUnit, LengthY - GlobalY - lenUnit
+      * 20 + 20);
+    Fence[1] := TPoint.Create(GlobalX + lenUnit * 90,
+      LengthY - GlobalY - lenUnit * 10 + 20);
+    Fence[2] := TPoint.Create(GlobalX + lenUnit * 90,
+      LengthY - GlobalY - lenUnit * 2 + 20);
+    Fence[3] := TPoint.Create(GlobalX + lenUnit, LengthY - GlobalY - lenUnit
+      * 12 + 20);
     Polygon(Fence);
 
-    Fence[0] := TPoint.Create(GlobalX + lenUnit, LengthY - GlobalY - lenUnit * 45 + 20);
-    Fence[1] := TPoint.Create(GlobalX + lenUnit * 90, LengthY - GlobalY - lenUnit * 35 + 20);
-    Fence[2] := TPoint.Create(GlobalX + lenUnit * 90, LengthY - GlobalY - lenUnit * 27 + 20);
-    Fence[3] := TPoint.Create(GlobalX + lenUnit, LengthY - GlobalY - lenUnit * 37 + 20);
+    Fence[0] := TPoint.Create(GlobalX + lenUnit, LengthY - GlobalY - lenUnit
+      * 45 + 20);
+    Fence[1] := TPoint.Create(GlobalX + lenUnit * 90,
+      LengthY - GlobalY - lenUnit * 35 + 20);
+    Fence[2] := TPoint.Create(GlobalX + lenUnit * 90,
+      LengthY - GlobalY - lenUnit * 27 + 20);
+    Fence[3] := TPoint.Create(GlobalX + lenUnit, LengthY - GlobalY - lenUnit
+      * 37 + 20);
     Polygon(Fence);
 
     Pen.Width := 4;
@@ -366,11 +383,16 @@ begin
       MoveTo(currX, currY);
     end;
 
-    DrawLittleFlag(GlobalX + lenUnit, LengthY - GlobalY - 5 * lenUnit - 75 + 20, 75);
-    DrawLittleFlag(GlobalX + 12 * lenUnit, LengthY - GlobalY - 4 * lenUnit - 75 + 20, 75);
-    DrawLittleFlag(GlobalX + 24 * lenUnit, LengthY - GlobalY - 3 * lenUnit - 75 + 20, 75);
-    DrawLittleFlag(GlobalX + 36 * lenUnit, LengthY - GlobalY - 2 * lenUnit - 75 + 20, 75);
-    DrawLittleFlag(GlobalX + 48 * lenUnit, LengthY - GlobalY - 1 * lenUnit - 75 + 20, 75);
+    DrawLittleFlag(GlobalX + lenUnit, LengthY - GlobalY - 5 * lenUnit - 75
+      + 20, 75);
+    DrawLittleFlag(GlobalX + 12 * lenUnit, LengthY - GlobalY - 4 * lenUnit - 75
+      + 20, 75);
+    DrawLittleFlag(GlobalX + 24 * lenUnit, LengthY - GlobalY - 3 * lenUnit - 75
+      + 20, 75);
+    DrawLittleFlag(GlobalX + 36 * lenUnit, LengthY - GlobalY - 2 * lenUnit - 75
+      + 20, 75);
+    DrawLittleFlag(GlobalX + 48 * lenUnit, LengthY - GlobalY - 1 * lenUnit - 75
+      + 20, 75);
 
     DrawLittleFlag(GlobalX + 50 * lenUnit, GlobalY + 5 * lenUnit - 75 + 20, 75);
     DrawLittleFlag(GlobalX + 62 * lenUnit, GlobalY + 6 * lenUnit - 75 + 20, 75);
@@ -383,10 +405,14 @@ begin
     Brush.Color := clblue;
     Brush.Style := bsSolid;
 
-    Fence[0] := TPoint.Create(GlobalX + 85 * lenUnit, GlobalY + 18 * lenUnit + 36);
-    Fence[1] := TPoint.Create(GlobalX + 80 * lenUnit, GlobalY + 17 * lenUnit + 37);
-    Fence[2] := TPoint.Create(GlobalX + 70 * lenUnit, GlobalY + 33 * lenUnit + 39);
-    Fence[3] := TPoint.Create(GlobalX + 75 * lenUnit, GlobalY + 34 * lenUnit + 38);
+    Fence[0] := TPoint.Create(GlobalX + 85 * lenUnit,
+      GlobalY + 18 * lenUnit + 36);
+    Fence[1] := TPoint.Create(GlobalX + 80 * lenUnit,
+      GlobalY + 17 * lenUnit + 37);
+    Fence[2] := TPoint.Create(GlobalX + 70 * lenUnit,
+      GlobalY + 33 * lenUnit + 39);
+    Fence[3] := TPoint.Create(GlobalX + 75 * lenUnit,
+      GlobalY + 34 * lenUnit + 38);
     Polygon(Fence);
   end;
 end;
@@ -407,16 +433,18 @@ begin
 
     Rectangle(GlobalX, GlobalY, ClientWidth - GlobalX, ClientHeight - GlobalY);
 
-    Rectangle(GlobalX + 10 * lenUnit, LengthY - GlobalY * 3, GlobalX + 30 * lenUnit, ClientHeight - GlobalY);
-    Rectangle(GlobalX + 30 * lenUnit, LengthY - GlobalY * 5, GlobalX + 50 * lenUnit, ClientHeight - GlobalY);
-    Rectangle(GlobalX + 50 * lenUnit, LengthY - GlobalY * 4 + 50, GlobalX + 70 * lenUnit,
-      ClientHeight - GlobalY);
+    Rectangle(GlobalX + 10 * lenUnit, LengthY - GlobalY * 3,
+      GlobalX + 30 * lenUnit, ClientHeight - GlobalY);
+    Rectangle(GlobalX + 30 * lenUnit, LengthY - GlobalY * 5,
+      GlobalX + 50 * lenUnit, ClientHeight - GlobalY);
+    Rectangle(GlobalX + 50 * lenUnit, LengthY - GlobalY * 4 + 50,
+      GlobalX + 70 * lenUnit, ClientHeight - GlobalY);
 
     MoveTo(GlobalX + lenUnit * 80, ClientHeight - GlobalY);
     LineTo(GlobalX + lenUnit * 80, ClientHeight - 6 * GlobalY);
     Brush.Color := clblue;
-    Rectangle(GlobalX + lenUnit * 80, ClientHeight - 6 * GlobalY, GlobalX + lenUnit * 85,
-      ClientHeight - 3 * GlobalY);
+    Rectangle(GlobalX + lenUnit * 80, ClientHeight - 6 * GlobalY,
+      GlobalX + lenUnit * 85, ClientHeight - 3 * GlobalY);
 
     // Volume of the third-place podium
     MoveTo(GlobalX + 10 * lenUnit, LengthY - GlobalY * 3);
@@ -466,14 +494,17 @@ begin
     SetLength(Poly, 4);
     Poly[0] := TPoint.Create(GlobalX + OffsetX + 500, GlobalY + OffsetY);
     Poly[1] := TPoint.Create(GlobalX + OffsetX + 500, GlobalY + OffsetY + 100);
-    Poly[2] := TPoint.Create(GlobalX + OffsetX + 500 + 200, GlobalY + OffsetY + 100);
+    Poly[2] := TPoint.Create(GlobalX + OffsetX + 500 + 200,
+      GlobalY + OffsetY + 100);
     Poly[3] := TPoint.Create(GlobalX + OffsetX + 500 + 200, GlobalY + OffsetY);
     Polygon(Poly);
 
     Poly[0] := TPoint.Create(GlobalX + OffsetX + 500 + 100, GlobalY + OffsetY);
     Poly[1] := TPoint.Create(GlobalX + OffsetX + 500 + 200, GlobalY + OffsetY);
-    Poly[2] := TPoint.Create(GlobalX + OffsetX + 500 + 200, GlobalY + OffsetY + 500);
-    Poly[3] := TPoint.Create(GlobalX + OffsetX + 500 + 100, GlobalY + OffsetY + 500);
+    Poly[2] := TPoint.Create(GlobalX + OffsetX + 500 + 200,
+      GlobalY + OffsetY + 500);
+    Poly[3] := TPoint.Create(GlobalX + OffsetX + 500 + 100,
+      GlobalY + OffsetY + 500);
     Polygon(Poly);
 
     Pen.Width := 1;
@@ -484,14 +515,19 @@ begin
 
     Poly[0] := TPoint.Create(GlobalX + OffsetX + 100, GlobalY + OffsetY);
     Poly[1] := TPoint.Create(GlobalX + OffsetX + 100, GlobalY + OffsetY + 100);
-    Poly[2] := TPoint.Create(GlobalX + OffsetX + 100 + 200, GlobalY + OffsetY + 100);
+    Poly[2] := TPoint.Create(GlobalX + OffsetX + 100 + 200,
+      GlobalY + OffsetY + 100);
     Poly[3] := TPoint.Create(GlobalX + OffsetX + 100 + 200, GlobalY + OffsetY);
     Polygon(Poly);
 
-    Poly[0] := TPoint.Create(GlobalX + OffsetX + 100 + 100, GlobalY + OffsetY + 400);
-    Poly[1] := TPoint.Create(GlobalX + OffsetX + 100, GlobalY + OffsetY + 400 + 100);
-    Poly[2] := TPoint.Create(GlobalX + OffsetX + 100 + 200, GlobalY + OffsetY + 400 + 100);
-    Poly[3] := TPoint.Create(GlobalX + OffsetX + 100 + 200, GlobalY + OffsetY + 400);
+    Poly[0] := TPoint.Create(GlobalX + OffsetX + 100 + 100,
+      GlobalY + OffsetY + 400);
+    Poly[1] := TPoint.Create(GlobalX + OffsetX + 100,
+      GlobalY + OffsetY + 400 + 100);
+    Poly[2] := TPoint.Create(GlobalX + OffsetX + 100 + 200,
+      GlobalY + OffsetY + 400 + 100);
+    Poly[3] := TPoint.Create(GlobalX + OffsetX + 100 + 200,
+      GlobalY + OffsetY + 400);
     Polygon(Poly);
 
   end;
@@ -541,7 +577,8 @@ procedure PersonFirstFrame(var currPerson: TPerson);
 begin
   with currPerson, Center do
   begin
-    Head.Create(x - 9 * size div 8, y - 2 * size, x + 3 * size div 8, y - size div 2);
+    Head.Create(x - 9 * size div 8, y - 2 * size, x + 3 * size div 8,
+      y - size div 2);
     Body[1].Create(x - 2 * size div 10, y - size div 2);
     Body[2].Create(x, y);
     Body[3].Create(x + 2 * size div 10, y + 2 * size);
@@ -574,7 +611,8 @@ procedure PersonSecondFrame(var currPerson: TPerson);
 begin
   with currPerson, Center do
   begin
-    Head.Create(x - 9 * size div 8, y - 2 * size, x + 3 * size div 8, y - size div 2);
+    Head.Create(x - 9 * size div 8, y - 2 * size, x + 3 * size div 8,
+      y - size div 2);
     Body[1].Create(x - 2 * size div 10, y - size div 2);
     Body[2].Create(x, y);
     Body[3].Create(x + 2 * size div 10, y + 2 * size);
@@ -607,7 +645,8 @@ procedure PersonThirdFrame(var currPerson: TPerson);
 begin
   with currPerson, Center do
   begin
-    Head.Create(x - 9 * size div 8, y - 2 * size, x + 3 * size div 8, y - size div 2);
+    Head.Create(x - 9 * size div 8, y - 2 * size, x + 3 * size div 8,
+      y - size div 2);
     Body[1].Create(x - 2 * size div 10, y - size div 2);
     Body[2].Create(x, y);
     Body[3].Create(x + 2 * size div 10, y + 2 * size);
@@ -640,7 +679,8 @@ procedure PersonForthFrame(var currPerson: TPerson);
 begin
   with currPerson, Center do
   begin
-    Head.Create(x - 2 * size div 4, y - 3 * size div 2, x + 2 * size div 4, y - size div 2);
+    Head.Create(x - 2 * size div 4, y - 3 * size div 2, x + 2 * size div 4,
+      y - size div 2);
     Body[1].Create(x, y - size div 2);
     Body[2].Create(x, y);
     Body[3].Create(x, y + 3 * size div 2);
@@ -673,7 +713,8 @@ procedure PersonFifthFrame(var currPerson: TPerson);
 begin
   with currPerson, Center do
   begin
-    Head.Create(x - 2 * size div 4, y - 3 * size div 2, x + 2 * size div 4, y - size div 2);
+    Head.Create(x - 2 * size div 4, y - 3 * size div 2, x + 2 * size div 4,
+      y - size div 2);
     Body[1].Create(x, y - size div 2);
     Body[2].Create(x, y);
     Body[3].Create(x, y + 3 * size div 2);
@@ -706,7 +747,8 @@ procedure PersonSixthFrame(var currPerson: TPerson);
 begin
   with currPerson, Center do
   begin
-    Head.Create(x - 2 * size div 4, y - 3 * size div 2, x + 2 * size div 4, y - size div 2);
+    Head.Create(x - 2 * size div 4, y - 3 * size div 2, x + 2 * size div 4,
+      y - size div 2);
     Body[1].Create(x, y - size div 2);
     Body[2].Create(x, y);
     Body[3].Create(x, y + 3 * size div 2);
@@ -739,7 +781,8 @@ procedure PersonOtherSideFirstFrame(var currPerson: TPerson);
 begin
   with currPerson, Center do
   begin
-    Head.Create(x - 3 * size div 8, y - 2 * size, x + 9 * size div 8, y - size div 2);
+    Head.Create(x - 3 * size div 8, y - 2 * size, x + 9 * size div 8,
+      y - size div 2);
     Body[1].Create(x + 2 * size div 10, y - size div 2);
     Body[2].Create(x, y);
     Body[3].Create(x - 2 * size div 10, y + 2 * size);
@@ -772,7 +815,8 @@ procedure PersonOtherSideSecondFrame(var currPerson: TPerson);
 begin
   with currPerson, Center do
   begin
-    Head.Create(x - 3 * size div 8, y - 2 * size, x + 9 * size div 8, y - size div 2);
+    Head.Create(x - 3 * size div 8, y - 2 * size, x + 9 * size div 8,
+      y - size div 2);
     Body[1].Create(x + 2 * size div 10, y - size div 2);
     Body[2].Create(x, y);
     Body[3].Create(x - 2 * size div 10, y + 2 * size);
@@ -805,7 +849,8 @@ procedure PersonOtherSideThirdFrame(var currPerson: TPerson);
 begin
   with currPerson, Center do
   begin
-    Head.Create(x - 3 * size div 8, y - 2 * size, x + 9 * size div 8, y - size div 2);
+    Head.Create(x - 3 * size div 8, y - 2 * size, x + 9 * size div 8,
+      y - size div 2);
     Body[1].Create(x + 2 * size div 10, y - size div 2);
     Body[2].Create(x, y);
     Body[3].Create(x - 2 * size div 10, y + 2 * size);
@@ -870,10 +915,10 @@ function Rotation(const startpoint, endPoint: TPoint; angle: single): TPoint;
 var
   Rotated: TPoint;
 begin
-  Result := Rotated.Create(trunc(startpoint.x + ((endPoint.x - startpoint.x) * cos(angle) +
-    (endPoint.y - startpoint.y) * sin(angle))),
-    trunc(startpoint.y + (-(endPoint.x - startpoint.x) * sin(angle) + (endPoint.y - startpoint.y) *
-    cos(angle))));
+  Result := Rotated.Create(trunc(startpoint.x + ((endPoint.x - startpoint.x) *
+    cos(angle) + (endPoint.y - startpoint.y) * sin(angle))),
+    trunc(startpoint.y + (-(endPoint.x - startpoint.x) * sin(angle) +
+    (endPoint.y - startpoint.y) * cos(angle))));
 
 end;
 
@@ -881,11 +926,12 @@ function Moving(const startLine, endLine, base: TPoint): TPoint;
 var
   res: TPoint;
 begin
-  Result := res.Create(base.x + (endLine.x - startLine.x), base.y + (endLine.y - startLine.y));
+  Result := res.Create(base.x + (endLine.x - startLine.x),
+    base.y + (endLine.y - startLine.y));
 end;
 
-function RotateHand(var person: TVectorPerson; const pivot: TPoint; const stayArm: TPointsArm;
-  const stayAngle: TAnglesArm): TPointsArm;
+function RotateHand(var person: TVectorPerson; const pivot: TPoint;
+  const stayArm: TPointsArm; const stayAngle: TAnglesArm): TPointsArm;
 var
   Arm: TPointsArm;
   newPalm: TPoint;
@@ -893,10 +939,10 @@ begin
   with person do
   begin
     Arm[shoulder] := Body[shoulderBod];
-    Arm[elbow] := Rotation(Arm[shoulder], Moving(stayArm[shoulder], stayArm[elbow], Arm[shoulder]),
-      stayAngle[angleElbow]);
-    Arm[palm] := Rotation(Arm[elbow], Moving(stayArm[elbow], stayArm[palm], Arm[elbow]),
-      stayAngle[anglePalm]);
+    Arm[elbow] := Rotation(Arm[shoulder], Moving(stayArm[shoulder],
+      stayArm[elbow], Arm[shoulder]), stayAngle[angleElbow]);
+    Arm[palm] := Rotation(Arm[elbow], Moving(stayArm[elbow], stayArm[palm],
+      Arm[elbow]), stayAngle[anglePalm]);
   end;
   Result := Arm;
 end;
@@ -908,20 +954,21 @@ begin
   with person do
   begin
     Body[pach].Create(ArmRight[shoulder].x, ArmRight[shoulder].y + height);
-    Body[adamsApple].Create(ArmRight[shoulder].x, ArmRight[shoulder].y - (height div 3));
+    Body[adamsApple].Create(ArmRight[shoulder].x, ArmRight[shoulder].y -
+      (height div 3));
     Body[shoulderBod].Create(ArmRight[shoulder].x, ArmRight[shoulder].y);
 
     ArmLeft[shoulder].Create(ArmRight[shoulder].x, ArmRight[shoulder].y);
-    ArmLeft[elbow].Create(ArmRight[shoulder].x - trunc(0.4 * (Body[pach].y - Body[adamsApple].y)),
-      ArmRight[shoulder].y);
-    ArmLeft[palm].Create(ArmRight[shoulder].x - trunc(0.8 * (Body[pach].y - Body[adamsApple].y)),
-      ArmRight[shoulder].y);
+    ArmLeft[elbow].Create(ArmRight[shoulder].x -
+      trunc(0.4 * (Body[pach].y - Body[adamsApple].y)), ArmRight[shoulder].y);
+    ArmLeft[palm].Create(ArmRight[shoulder].x -
+      trunc(0.8 * (Body[pach].y - Body[adamsApple].y)), ArmRight[shoulder].y);
 
     ArmRight[shoulder].Create(ArmRight[shoulder].x, ArmRight[shoulder].y);
-    ArmRight[elbow].Create(ArmRight[shoulder].x + trunc(0.4 * (Body[pach].y - Body[adamsApple].y)),
-      ArmRight[shoulder].y);
-    ArmRight[palm].Create(ArmRight[shoulder].x + trunc(0.8 * (Body[pach].y - Body[adamsApple].y)),
-      ArmRight[shoulder].y);
+    ArmRight[elbow].Create(ArmRight[shoulder].x +
+      trunc(0.4 * (Body[pach].y - Body[adamsApple].y)), ArmRight[shoulder].y);
+    ArmRight[palm].Create(ArmRight[shoulder].x +
+      trunc(0.8 * (Body[pach].y - Body[adamsApple].y)), ArmRight[shoulder].y);
 
     lengthLeg := (height shl 1 + height div 5);
     leg.Create(ArmRight[shoulder].x, ArmRight[shoulder].y + lengthLeg);
@@ -937,11 +984,13 @@ begin
     LegRight[ankle] := Rotation(LegRight[ending], leg, pi / 6);
     LegRight[knee].Create(((LegRight[ankle].x + LegRight[ending].x) shr 1),
       (LegRight[ankle].y + LegRight[ending].y) shr 1);
-    LegRight[toe].Create(LegRight[ankle].x + ((height) div 3), LegRight[ankle].y);
+    LegRight[toe].Create(LegRight[ankle].x + ((height) div 3),
+      LegRight[ankle].y);
 
     angleEnding := pi / 6;
 
-    head1.Create(LegLeft[ankle].x, Body[adamsApple].y - (LegRight[ankle].x - LegLeft[ankle].x));
+    head1.Create(LegLeft[ankle].x, Body[adamsApple].y -
+      (LegRight[ankle].x - LegLeft[ankle].x));
     head2.Create(LegRight[ankle].x, Body[adamsApple].y);
     Head.Create(head1, head2);
   end;
@@ -978,7 +1027,8 @@ begin
   Result := NewEquipment;
 end;
 
-procedure DrawEquipment(const EquipToDraw: TEquipment; colour: TColor; flag: boolean = True);
+procedure DrawEquipment(const EquipToDraw: TEquipment; colour: TColor;
+  flag: boolean = True);
 begin
   with MainForm.imgMain.Canvas do
   begin
@@ -1009,14 +1059,20 @@ procedure EquipmentFirstFrame(var currEqupment: TEquipment);
 begin
   with currEqupment do
   begin
-    SnowShoeLeft[1].Create(SnowShoeLeft[2].x - 3 * size div 2, SnowShoeLeft[2].y + 3 * size div 2);
-    SnowShoeLeft[3].Create(SnowShoeLeft[2].x + 3 * size div 2, SnowShoeLeft[2].y - 3 * size div 2);
+    SnowShoeLeft[1].Create(SnowShoeLeft[2].x - 3 * size div 2,
+      SnowShoeLeft[2].y + 3 * size div 2);
+    SnowShoeLeft[3].Create(SnowShoeLeft[2].x + 3 * size div 2,
+      SnowShoeLeft[2].y - 3 * size div 2);
 
-    SnowShoeRight[1].Create(SnowShoeRight[2].x - 3 * size div 2, SnowShoeRight[2].y + 3 * size div 2);
-    SnowShoeRight[3].Create(SnowShoeRight[2].x + 3 * size div 2, SnowShoeRight[2].y - 3 * size div 2);
+    SnowShoeRight[1].Create(SnowShoeRight[2].x - 3 * size div 2,
+      SnowShoeRight[2].y + 3 * size div 2);
+    SnowShoeRight[3].Create(SnowShoeRight[2].x + 3 * size div 2,
+      SnowShoeRight[2].y - 3 * size div 2);
 
-    SnowStickLeft[2].Create(SnowStickLeft[1].x - size, SnowStickLeft[1].y + 4 * size);
-    SnowStickRight[2].Create(SnowStickRight[1].x + size div 2, SnowStickRight[1].y + 4 * size);
+    SnowStickLeft[2].Create(SnowStickLeft[1].x - size,
+      SnowStickLeft[1].y + 4 * size);
+    SnowStickRight[2].Create(SnowStickRight[1].x + size div 2,
+      SnowStickRight[1].y + 4 * size);
   end;
 end;
 
@@ -1024,14 +1080,20 @@ procedure EquipmentSecondFrame(var currEqupment: TEquipment);
 begin
   with currEqupment do
   begin
-    SnowShoeLeft[1].Create(SnowShoeLeft[2].x - 3 * size div 2, SnowShoeLeft[2].y + 3 * size div 2);
-    SnowShoeLeft[3].Create(SnowShoeLeft[2].x + 3 * size div 2, SnowShoeLeft[2].y - 3 * size div 2);
+    SnowShoeLeft[1].Create(SnowShoeLeft[2].x - 3 * size div 2,
+      SnowShoeLeft[2].y + 3 * size div 2);
+    SnowShoeLeft[3].Create(SnowShoeLeft[2].x + 3 * size div 2,
+      SnowShoeLeft[2].y - 3 * size div 2);
 
-    SnowShoeRight[1].Create(SnowShoeRight[2].x - 3 * size div 2, SnowShoeRight[2].y + 3 * size div 2);
-    SnowShoeRight[3].Create(SnowShoeRight[2].x + 3 * size div 2, SnowShoeRight[2].y - 3 * size div 2);
+    SnowShoeRight[1].Create(SnowShoeRight[2].x - 3 * size div 2,
+      SnowShoeRight[2].y + 3 * size div 2);
+    SnowShoeRight[3].Create(SnowShoeRight[2].x + 3 * size div 2,
+      SnowShoeRight[2].y - 3 * size div 2);
 
-    SnowStickLeft[2].Create(SnowStickLeft[1].x + size, SnowStickLeft[1].y + 3 * size);
-    SnowStickRight[2].Create(SnowStickRight[1].x + size, SnowStickRight[1].y + 3 * size);
+    SnowStickLeft[2].Create(SnowStickLeft[1].x + size,
+      SnowStickLeft[1].y + 3 * size);
+    SnowStickRight[2].Create(SnowStickRight[1].x + size,
+      SnowStickRight[1].y + 3 * size);
   end;
 end;
 
@@ -1039,14 +1101,20 @@ procedure EquipmentThirdFrame(var currEqupment: TEquipment);
 begin
   with currEqupment do
   begin
-    SnowShoeLeft[1].Create(SnowShoeLeft[2].x - 3 * size div 2, SnowShoeLeft[2].y + 3 * size div 2);
-    SnowShoeLeft[3].Create(SnowShoeLeft[2].x + 3 * size div 2, SnowShoeLeft[2].y - 3 * size div 2);
+    SnowShoeLeft[1].Create(SnowShoeLeft[2].x - 3 * size div 2,
+      SnowShoeLeft[2].y + 3 * size div 2);
+    SnowShoeLeft[3].Create(SnowShoeLeft[2].x + 3 * size div 2,
+      SnowShoeLeft[2].y - 3 * size div 2);
 
-    SnowShoeRight[1].Create(SnowShoeRight[2].x - 3 * size div 2, SnowShoeRight[2].y + 3 * size div 2);
-    SnowShoeRight[3].Create(SnowShoeRight[2].x + 3 * size div 2, SnowShoeRight[2].y - 3 * size div 2);
+    SnowShoeRight[1].Create(SnowShoeRight[2].x - 3 * size div 2,
+      SnowShoeRight[2].y + 3 * size div 2);
+    SnowShoeRight[3].Create(SnowShoeRight[2].x + 3 * size div 2,
+      SnowShoeRight[2].y - 3 * size div 2);
 
-    SnowStickLeft[2].Create(SnowStickLeft[1].x + 2 * size, SnowStickLeft[1].y + 2 * size);
-    SnowStickRight[2].Create(SnowStickRight[1].x + 2 * size, SnowStickRight[1].y + 2 * size);
+    SnowStickLeft[2].Create(SnowStickLeft[1].x + 2 * size,
+      SnowStickLeft[1].y + 2 * size);
+    SnowStickRight[2].Create(SnowStickRight[1].x + 2 * size,
+      SnowStickRight[1].y + 2 * size);
   end;
 end;
 
@@ -1054,14 +1122,20 @@ procedure EquipmentForthFrame(var currEqupment: TEquipment);
 begin
   with currEqupment do
   begin
-    SnowShoeLeft[1].Create(SnowShoeLeft[2].x - size div 10, SnowShoeLeft[2].y + 3 * size div 2);
-    SnowShoeLeft[3].Create(SnowShoeLeft[2].x + size div 10, SnowShoeLeft[2].y - 3 * size div 2);
+    SnowShoeLeft[1].Create(SnowShoeLeft[2].x - size div 10,
+      SnowShoeLeft[2].y + 3 * size div 2);
+    SnowShoeLeft[3].Create(SnowShoeLeft[2].x + size div 10,
+      SnowShoeLeft[2].y - 3 * size div 2);
 
-    SnowShoeRight[1].Create(SnowShoeRight[2].x + size div 10, SnowShoeRight[2].y + 3 * size div 2);
-    SnowShoeRight[3].Create(SnowShoeRight[2].x - size div 10, SnowShoeRight[2].y - 3 * size div 2);
+    SnowShoeRight[1].Create(SnowShoeRight[2].x + size div 10,
+      SnowShoeRight[2].y + 3 * size div 2);
+    SnowShoeRight[3].Create(SnowShoeRight[2].x - size div 10,
+      SnowShoeRight[2].y - 3 * size div 2);
 
-    SnowStickLeft[2].Create(SnowStickLeft[1].x - size div 5, SnowStickLeft[1].y + 4 * size);
-    SnowStickRight[2].Create(SnowStickRight[1].x + size div 5, SnowStickRight[1].y + 4 * size);
+    SnowStickLeft[2].Create(SnowStickLeft[1].x - size div 5,
+      SnowStickLeft[1].y + 4 * size);
+    SnowStickRight[2].Create(SnowStickRight[1].x + size div 5,
+      SnowStickRight[1].y + 4 * size);
   end;
 end;
 
@@ -1069,14 +1143,20 @@ procedure EquipmentFifthFrame(var currEqupment: TEquipment);
 begin
   with currEqupment do
   begin
-    SnowShoeLeft[1].Create(SnowShoeLeft[2].x - size div 10, SnowShoeLeft[2].y + 3 * size div 2);
-    SnowShoeLeft[3].Create(SnowShoeLeft[2].x + size div 10, SnowShoeLeft[2].y - 3 * size div 2);
+    SnowShoeLeft[1].Create(SnowShoeLeft[2].x - size div 10,
+      SnowShoeLeft[2].y + 3 * size div 2);
+    SnowShoeLeft[3].Create(SnowShoeLeft[2].x + size div 10,
+      SnowShoeLeft[2].y - 3 * size div 2);
 
-    SnowShoeRight[1].Create(SnowShoeRight[2].x + size div 10, SnowShoeRight[2].y + 3 * size div 2);
-    SnowShoeRight[3].Create(SnowShoeRight[2].x - size div 10, SnowShoeRight[2].y - 3 * size div 2);
+    SnowShoeRight[1].Create(SnowShoeRight[2].x + size div 10,
+      SnowShoeRight[2].y + 3 * size div 2);
+    SnowShoeRight[3].Create(SnowShoeRight[2].x - size div 10,
+      SnowShoeRight[2].y - 3 * size div 2);
 
-    SnowStickLeft[2].Create(SnowStickLeft[1].x - size div 5, SnowStickLeft[1].y + 3 * size);
-    SnowStickRight[2].Create(SnowStickRight[1].x + size div 5, SnowStickRight[1].y + 3 * size);
+    SnowStickLeft[2].Create(SnowStickLeft[1].x - size div 5,
+      SnowStickLeft[1].y + 3 * size);
+    SnowStickRight[2].Create(SnowStickRight[1].x + size div 5,
+      SnowStickRight[1].y + 3 * size);
   end;
 end;
 
@@ -1084,14 +1164,20 @@ procedure EquipmentSixthFrame(var currEqupment: TEquipment);
 begin
   with currEqupment do
   begin
-    SnowShoeLeft[1].Create(SnowShoeLeft[2].x - size div 10, SnowShoeLeft[2].y + 3 * size div 2);
-    SnowShoeLeft[3].Create(SnowShoeLeft[2].x + size div 10, SnowShoeLeft[2].y - 3 * size div 2);
+    SnowShoeLeft[1].Create(SnowShoeLeft[2].x - size div 10,
+      SnowShoeLeft[2].y + 3 * size div 2);
+    SnowShoeLeft[3].Create(SnowShoeLeft[2].x + size div 10,
+      SnowShoeLeft[2].y - 3 * size div 2);
 
-    SnowShoeRight[1].Create(SnowShoeRight[2].x + size div 10, SnowShoeRight[2].y + 3 * size div 2);
-    SnowShoeRight[3].Create(SnowShoeRight[2].x - size div 10, SnowShoeRight[2].y - 3 * size div 2);
+    SnowShoeRight[1].Create(SnowShoeRight[2].x + size div 10,
+      SnowShoeRight[2].y + 3 * size div 2);
+    SnowShoeRight[3].Create(SnowShoeRight[2].x - size div 10,
+      SnowShoeRight[2].y - 3 * size div 2);
 
-    SnowStickLeft[2].Create(SnowStickLeft[1].x - size div 5, SnowStickLeft[1].y - 3 * size);
-    SnowStickRight[2].Create(SnowStickRight[1].x + size div 5, SnowStickRight[1].y - 3 * size);
+    SnowStickLeft[2].Create(SnowStickLeft[1].x - size div 5,
+      SnowStickLeft[1].y - 3 * size);
+    SnowStickRight[2].Create(SnowStickRight[1].x + size div 5,
+      SnowStickRight[1].y - 3 * size);
   end;
 end;
 
@@ -1099,14 +1185,20 @@ procedure EquipmentOtherSideFirstFrame(var currEqupment: TEquipment);
 begin
   with currEqupment do
   begin
-    SnowShoeLeft[1].Create(SnowShoeLeft[2].x - 5 * size div 2, SnowShoeLeft[2].y - size div 3);
-    SnowShoeLeft[3].Create(SnowShoeLeft[2].x + 5 * size div 2, SnowShoeLeft[2].y + size div 3);
+    SnowShoeLeft[1].Create(SnowShoeLeft[2].x - 5 * size div 2,
+      SnowShoeLeft[2].y - size div 3);
+    SnowShoeLeft[3].Create(SnowShoeLeft[2].x + 5 * size div 2,
+      SnowShoeLeft[2].y + size div 3);
 
-    SnowShoeRight[1].Create(SnowShoeRight[2].x - 5 * size div 2, SnowShoeRight[2].y - size div 3);
-    SnowShoeRight[3].Create(SnowShoeRight[2].x + 5 * size div 2, SnowShoeRight[2].y + size div 3);
+    SnowShoeRight[1].Create(SnowShoeRight[2].x - 5 * size div 2,
+      SnowShoeRight[2].y - size div 3);
+    SnowShoeRight[3].Create(SnowShoeRight[2].x + 5 * size div 2,
+      SnowShoeRight[2].y + size div 3);
 
-    SnowStickLeft[2].Create(SnowStickLeft[1].x - size div 2, SnowStickLeft[1].y + 3 * size);
-    SnowStickRight[2].Create(SnowStickRight[1].x + size div 2, SnowStickRight[1].y + 3 * size);
+    SnowStickLeft[2].Create(SnowStickLeft[1].x - size div 2,
+      SnowStickLeft[1].y + 3 * size);
+    SnowStickRight[2].Create(SnowStickRight[1].x + size div 2,
+      SnowStickRight[1].y + 3 * size);
   end;
 end;
 
@@ -1114,14 +1206,20 @@ procedure EquipmentOtherSideSecondFrame(var currEqupment: TEquipment);
 begin
   with currEqupment do
   begin
-    SnowShoeLeft[1].Create(SnowShoeLeft[2].x - 5 * size div 2, SnowShoeLeft[2].y - size div 3);
-    SnowShoeLeft[3].Create(SnowShoeLeft[2].x + 5 * size div 2, SnowShoeLeft[2].y + size div 3);
+    SnowShoeLeft[1].Create(SnowShoeLeft[2].x - 5 * size div 2,
+      SnowShoeLeft[2].y - size div 3);
+    SnowShoeLeft[3].Create(SnowShoeLeft[2].x + 5 * size div 2,
+      SnowShoeLeft[2].y + size div 3);
 
-    SnowShoeRight[1].Create(SnowShoeRight[2].x - 5 * size div 2, SnowShoeRight[2].y - size div 3);
-    SnowShoeRight[3].Create(SnowShoeRight[2].x + 5 * size div 2, SnowShoeRight[2].y + size div 3);
+    SnowShoeRight[1].Create(SnowShoeRight[2].x - 5 * size div 2,
+      SnowShoeRight[2].y - size div 3);
+    SnowShoeRight[3].Create(SnowShoeRight[2].x + 5 * size div 2,
+      SnowShoeRight[2].y + size div 3);
 
-    SnowStickLeft[2].Create(SnowStickLeft[1].x - 3 * size div 2, SnowStickLeft[1].y + 6 * size div 2);
-    SnowStickRight[2].Create(SnowStickRight[1].x - size div 2, SnowStickRight[1].y + 6 * size div 2);
+    SnowStickLeft[2].Create(SnowStickLeft[1].x - 3 * size div 2,
+      SnowStickLeft[1].y + 6 * size div 2);
+    SnowStickRight[2].Create(SnowStickRight[1].x - size div 2,
+      SnowStickRight[1].y + 6 * size div 2);
   end;
 end;
 
@@ -1129,14 +1227,20 @@ procedure EquipmentOtherSideThirdFrame(var currEqupment: TEquipment);
 begin
   with currEqupment do
   begin
-    SnowShoeLeft[1].Create(SnowShoeLeft[2].x - 5 * size div 2, SnowShoeLeft[2].y - size div 3);
-    SnowShoeLeft[3].Create(SnowShoeLeft[2].x + 5 * size div 2, SnowShoeLeft[2].y + size div 3);
+    SnowShoeLeft[1].Create(SnowShoeLeft[2].x - 5 * size div 2,
+      SnowShoeLeft[2].y - size div 3);
+    SnowShoeLeft[3].Create(SnowShoeLeft[2].x + 5 * size div 2,
+      SnowShoeLeft[2].y + size div 3);
 
-    SnowShoeRight[1].Create(SnowShoeRight[2].x - 5 * size div 2, SnowShoeRight[2].y - size div 3);
-    SnowShoeRight[3].Create(SnowShoeRight[2].x + 5 * size div 2, SnowShoeRight[2].y + size div 3);
+    SnowShoeRight[1].Create(SnowShoeRight[2].x - 5 * size div 2,
+      SnowShoeRight[2].y - size div 3);
+    SnowShoeRight[3].Create(SnowShoeRight[2].x + 5 * size div 2,
+      SnowShoeRight[2].y + size div 3);
 
-    SnowStickLeft[2].Create(SnowStickLeft[1].x - 5 * size div 2, SnowStickLeft[1].y + 3 * size);
-    SnowStickRight[2].Create(SnowStickRight[1].x - 2 * size, SnowStickRight[1].y + 3 * size);
+    SnowStickLeft[2].Create(SnowStickLeft[1].x - 5 * size div 2,
+      SnowStickLeft[1].y + 3 * size);
+    SnowStickRight[2].Create(SnowStickRight[1].x - 2 * size,
+      SnowStickRight[1].y + 3 * size);
   end;
 end;
 
@@ -1200,8 +1304,10 @@ begin
     WritePonPon(PonPonL1, clBtnFace);
     WritePonPon(PonPonR1, clBtnFace);
 
-    ArmRight := RotateHand(CheerPerson1, ArmRight[shoulder], stayArmRight1, angleRightArm1);
-    ArmLeft := RotateHand(CheerPerson1, ArmRight[shoulder], stayArmLeft1, angleLeftArm1);
+    ArmRight := RotateHand(CheerPerson1, ArmRight[shoulder], stayArmRight1,
+      angleRightArm1);
+    ArmLeft := RotateHand(CheerPerson1, ArmRight[shoulder], stayArmLeft1,
+      angleLeftArm1);
 
     imgMain.Canvas.Pen.Color := clBlack;
     imgMain.Canvas.Pen.Width := 3;
@@ -1237,7 +1343,7 @@ begin
     angleRightArm1 := FormAnglesArm(DegToRad(angle1), DegToRad(angle1));
     angleLeftArm1 := ReverseArmAngles(angleRightArm1);
 
-        imgMain.Canvas.Pen.Color := clBtnFace;
+    imgMain.Canvas.Pen.Color := clBtnFace;
     imgMain.Canvas.Pen.Width := 5;
     imgMain.Canvas.Brush.Color := clYellow;
     WriteVPerson(CheerPerson1);
@@ -1247,8 +1353,10 @@ begin
     WritePonPon(PonPonL1, clBtnFace);
     WritePonPon(PonPonR1, clBtnFace);
 
-    ArmRight := RotateHand(CheerPerson1, ArmRight[shoulder], stayArmRight1, angleRightArm1);
-    ArmLeft := RotateHand(CheerPerson1, ArmRight[shoulder], stayArmLeft1, angleLeftArm1);
+    ArmRight := RotateHand(CheerPerson1, ArmRight[shoulder], stayArmRight1,
+      angleRightArm1);
+    ArmLeft := RotateHand(CheerPerson1, ArmRight[shoulder], stayArmLeft1,
+      angleLeftArm1);
 
     imgMain.Canvas.Pen.Color := clBlack;
     imgMain.Canvas.Pen.Width := 3;
@@ -1284,9 +1392,6 @@ begin
   MainForm.imgMain.ClientWidth := 1920;
   MainForm.imgMain.ClientHeight := 1080;
 
-  mpVictoryMusic.FileName := 'morgen.mp3';
-  mpClap.FileName := 'Clap.mp3';
-
   xc_start := 850;
   yc_start := 250;
   k := 0.6;
@@ -1304,10 +1409,12 @@ begin
   // timeStarter2.Enabled := True;
   timeStarter3.Interval := 5000;
   timeStarter1.Enabled := True;
-
-  MediaPlayer1.FileName := 'Second.mp3';
-  MediaPlayer1.Open;
-  MediaPlayer1.Play;
+  //
+  // MediaPlayer1.FileName := 'Second.mp3';
+  // MediaPlayer1.Open;
+  // MediaPlayer1.Play;
+  mpClap.FileName := 'Clap.mp3';
+  mpClap.Open;
 
   // timeDebug.Interval := 100;
   // timeDebug.Enabled := True;
@@ -1331,8 +1438,10 @@ begin
     WritePonPon(PonPonL2, clBtnFace);
     WritePonPon(PonPonR2, clBtnFace);
 
-    ArmRight := RotateHand(CheerPerson2, ArmRight[shoulder], stayArmRight2, angleRightArm2);
-    ArmLeft := RotateHand(CheerPerson2, ArmRight[shoulder], stayArmLeft2, angleLeftArm2);
+    ArmRight := RotateHand(CheerPerson2, ArmRight[shoulder], stayArmRight2,
+      angleRightArm2);
+    ArmLeft := RotateHand(CheerPerson2, ArmRight[shoulder], stayArmLeft2,
+      angleLeftArm2);
 
     imgMain.Canvas.Pen.Color := clBlack;
     imgMain.Canvas.Pen.Width := 3;
@@ -1379,8 +1488,10 @@ begin
     WritePonPon(PonPonL2, clWhite);
     WritePonPon(PonPonR2, clWhite);
 
-    ArmRight := RotateHand(CheerPerson2, ArmRight[shoulder], stayArmRight2, angleRightArm2);
-    ArmLeft := RotateHand(CheerPerson2, ArmRight[shoulder], stayArmLeft2, angleLeftArm2);
+    ArmRight := RotateHand(CheerPerson2, ArmRight[shoulder], stayArmRight2,
+      angleRightArm2);
+    ArmLeft := RotateHand(CheerPerson2, ArmRight[shoulder], stayArmLeft2,
+      angleLeftArm2);
 
     imgMain.Canvas.Pen.Color := clBlack;
     imgMain.Canvas.Pen.Width := 3;
@@ -1419,7 +1530,6 @@ begin
 
   for var i := Low(PersonAnimation) to High(PersonAnimation) do
   begin
-
     if i <= FramesCount div 2 then
     begin
       case i mod 3 of
@@ -1462,7 +1572,6 @@ begin
     end;
 
   end;
-
   InitMovieBorders;
 
   DrawFirstBackground();
@@ -1625,17 +1734,21 @@ procedure TMainForm.timeStarter4Timer(Sender: TObject);
 begin
   timeAnimation4.Interval := 120;
   MediaPlayer1.Pause;
-  // mpVictoryMusic.Play;
+  mpVictoryMusic.FileName := 'morgen.mp3';
+  mpVictoryMusic.Open;
+  mpVictoryMusic.Play;
   timeAnimation4.Enabled := True;
   timeStarter4.Enabled := false;
 end;
 
 procedure TMainForm.TrashTimer(Sender: TObject);
 begin
-  MainForm.imgMain.Canvas.Pen.Color := RGB(random(255), random(255), random(255));
-  MainForm.imgMain.Canvas.Brush.Color := RGB(random(255), random(255), random(255));
-  MainForm.imgMain.Canvas.Ellipse(random(ClientWidth), random(ClientHeight), random(ClientWidth),
-    random(ClientHeight))
+  MainForm.imgMain.Canvas.Pen.Color := RGB(random(255), random(255),
+    random(255));
+  MainForm.imgMain.Canvas.Brush.Color := RGB(random(255), random(255),
+    random(255));
+  MainForm.imgMain.Canvas.Ellipse(random(ClientWidth), random(ClientHeight),
+    random(ClientWidth), random(ClientHeight))
 end;
 
 procedure TMainForm.timeAnimation1Timer(Sender: TObject);
@@ -1682,7 +1795,8 @@ begin
       deltaPoint := TPoint.Create(0, 6);
 
     with FirstPerson do
-      FirstPerson := ConstructorPerson(Center.x + deltaPoint.x, Center.y + deltaPoint.y, size + deltaSize);
+      FirstPerson := ConstructorPerson(Center.x + deltaPoint.x,
+        Center.y + deltaPoint.y, size + deltaSize);
 
     PersonAnimation[CurrFrame](FirstPerson);
 
@@ -1725,7 +1839,8 @@ begin
       deltaPoint := TPoint.Create(20, 1);
 
     with FirstPerson do
-      FirstPerson := ConstructorPerson(Center.x + deltaPoint.x, Center.y + deltaPoint.y, size);
+      FirstPerson := ConstructorPerson(Center.x + deltaPoint.x,
+        Center.y + deltaPoint.y, size);
 
     PersonAnimation[CurrFrame](FirstPerson);
 
@@ -1766,7 +1881,8 @@ begin
       deltaPoint := TPoint.Create(20, 1);
 
     with SecondPerson do
-      SecondPerson := ConstructorPerson(Center.x + deltaPoint.x, Center.y + deltaPoint.y, size);
+      SecondPerson := ConstructorPerson(Center.x + deltaPoint.x,
+        Center.y + deltaPoint.y, size);
 
     PersonAnimation[CurrFrame2](SecondPerson);
 

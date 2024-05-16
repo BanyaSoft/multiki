@@ -3,8 +3,8 @@ object MainForm: TMainForm
   Top = 0
   BorderStyle = bsToolWindow
   Caption = 'MainForm'
-  ClientHeight = 585
-  ClientWidth = 1202
+  ClientHeight = 541
+  ClientWidth = 1184
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,10 +17,12 @@ object MainForm: TMainForm
   object imgMain: TImage
     Left = 0
     Top = 0
-    Width = 1202
-    Height = 585
+    Width = 1184
+    Height = 541
     Align = alClient
     ExplicitLeft = -8
+    ExplicitWidth = 1202
+    ExplicitHeight = 585
   end
   object Edit1: TEdit
     Left = 152

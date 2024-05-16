@@ -23,6 +23,8 @@ procedure FrameHandler(frame: integer; hz: real; flag: boolean; canva: TCanvas);
 
 implementation
 
+uses AudioRoutine;
+
 var
   i, xc_start, yc_start: integer;
   k: real;
@@ -48,7 +50,7 @@ begin
     4:
       begin
         PictureDraw4(canva);
-        // mpClap.Play; // хлопок
+        ClapSoundPlay;
       end;
 
     5:
@@ -77,7 +79,7 @@ begin
     11:
       begin
         PictureDraw11(canva);
-        // mpClap.Play; // хлопок
+        ClapSoundPlay;
       end;
     12:
 
@@ -101,7 +103,6 @@ begin
   xc_start := xStart;
   yc_start := yStart;
   k := ks;
-
 end;
 
 procedure PictureDraw1(canva: TCanvas);
