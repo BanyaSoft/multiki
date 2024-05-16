@@ -36,6 +36,30 @@ type
   TEquipFrame   = procedure(var currEqupment: TEquipment);
   TEquipFrames  = array of TEquipFrame;
 
+
+    ComponentsOfLeg = (ending, knee, ankle, toe);
+  ComponentsOfArm = (shoulder, elbow, palm);
+  AnglesArm = (angleElbow, anglePalm);
+  AnglesLeg = (angleKnee, angleAnkle, angleToe);
+  ComponentsOfBody = (pach, shoulderBod, adamsApple);
+
+
+  TPointsLeg = array [ComponentsOfLeg] of TPoint;
+  TPointsArm = array [ComponentsOfArm] of TPoint;
+  TPointsBody = array [ComponentsOfBody] of TPoint;
+  TAnglesArm = array [AnglesArm] of double;
+  TAnglesLeg = array [AnglesLeg] of double;
+
+  TVectorPerson = record
+    height: integer;
+    armleft, armRight: TPointsArm;
+    legLeft, legRight: TPointsLeg;
+    Body: TPointsBody;
+    head: TRect;
+  end;
+
+     TPonPon = TPoint;
+
 implementation
 
 end.

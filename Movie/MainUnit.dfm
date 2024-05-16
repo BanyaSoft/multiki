@@ -20,9 +20,7 @@ object MainForm: TMainForm
     Width = 1202
     Height = 585
     Align = alClient
-    ExplicitTop = 1
-    ExplicitWidth = 1194
-    ExplicitHeight = 584
+    ExplicitLeft = -8
   end
   object Edit1: TEdit
     Left = 152
@@ -139,13 +137,33 @@ object MainForm: TMainForm
   object timeStarter4: TTimer
     Enabled = False
     OnTimer = timeStarter4Timer
-    Left = 1120
-    Top = 488
+    Left = 1112
+    Top = 480
   end
   object timeAnimation4: TTimer
     Enabled = False
     OnTimer = timeAnimation4Timer
-    Left = 1120
-    Top = 536
+    Left = 1112
+    Top = 528
+  end
+  object FirstPersonHU: TTimer
+    OnTimer = FirstPersonHUTimer
+    Left = 1000
+    Top = 336
+  end
+  object FirstPersonHD: TTimer
+    OnTimer = FirstPersonHDTimer
+    Left = 1000
+    Top = 376
+  end
+  object SecondPersonHU: TTimer
+    OnTimer = SecondPersonHUTimer
+    Left = 928
+    Top = 336
+  end
+  object SecondPersonHD: TTimer
+    OnTimer = SecondPersonHDTimer
+    Left = 928
+    Top = 376
   end
 end
