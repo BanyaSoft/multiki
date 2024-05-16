@@ -20,13 +20,12 @@ object MainForm: TMainForm
     Width = 1184
     Height = 541
     Align = alClient
-    ExplicitLeft = -8
-    ExplicitWidth = 1202
-    ExplicitHeight = 585
+    ExplicitLeft = -368
+    ExplicitTop = -48
   end
   object Edit1: TEdit
     Left = 152
-    Top = 40
+    Top = 24
     Width = 121
     Height = 23
     TabOrder = 0
@@ -34,7 +33,7 @@ object MainForm: TMainForm
   end
   object Edit2: TEdit
     Left = 296
-    Top = 40
+    Top = 24
     Width = 121
     Height = 23
     TabOrder = 1
@@ -42,7 +41,7 @@ object MainForm: TMainForm
   end
   object Edit3: TEdit
     Left = 440
-    Top = 40
+    Top = 24
     Width = 121
     Height = 23
     TabOrder = 2
@@ -50,7 +49,7 @@ object MainForm: TMainForm
   end
   object Button1: TButton
     Left = 600
-    Top = 39
+    Top = 23
     Width = 75
     Height = 25
     Caption = 'MVP'

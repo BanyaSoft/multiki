@@ -553,7 +553,7 @@ begin
   begin
     Pen.Width := 2;
     Pen.Color := clBlack;
-    Brush.Color := clYellow;
+    Brush.Color := clWhite;
 
     {
       if flag then
@@ -1410,11 +1410,12 @@ begin
   timeStarter3.Interval := 5000;
   timeStarter1.Enabled := True;
   //
-  // MediaPlayer1.FileName := 'Second.mp3';
-  // MediaPlayer1.Open;
-  // MediaPlayer1.Play;
+  MediaPlayer1.FileName := 'Second.mp3';
+  MediaPlayer1.Open;
+  MediaPlayer1.Play;
   mpClap.FileName := 'Clap.mp3';
   mpClap.Open;
+  // mpClap.Play;
 
   // timeDebug.Interval := 100;
   // timeDebug.Enabled := True;
@@ -1818,7 +1819,7 @@ begin
   if CurrFrame >= FramesCount - 1 then
   begin
     timeAnimation2.Enabled := false;
-    Sleep(2000);
+    Sleep(1000);
     timeStarter4.Enabled := True;
   end
   else
