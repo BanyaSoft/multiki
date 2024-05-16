@@ -53,6 +53,9 @@ implementation
 
 {$R *.dfm}
 
+procedure DrawChristmasTree(x, y, n: integer); forward
+procedure DrawSnowMan(x, y, size: integer); forward
+
 var
   FirstPerson: TPerson;
   FirstEquip: TEquipment;
@@ -108,6 +111,8 @@ procedure DrawFirstBackground;
 var
   Fence: TPolygon;
 begin
+
+  InitMovieBorders();
   with MainForm.imgMain.Canvas do
   begin
 
@@ -155,8 +160,15 @@ begin
     Fence[2] := TPoint.Create(LengthX - GlobalX, LengthY - GlobalY);
     Fence[3] := TPoint.Create(LengthX - GlobalX, LengthY - 5 * GlobalY div 2);
     Polygon(Fence);
-
   end;
+
+  DrawChristmasTree(600, 450, 1);
+  DrawChristmasTree(525, 550, 2);
+  DrawChristmasTree(450, 650, 2);
+  DrawChristmasTree(375, 750, 1);
+  DrawChristmasTree(300, 850, 2);
+
+  DrawSnowMan(LengthX - 2 * GlobalX, GlobalY * 4, 6);
 end;
 
 procedure DrawChristmasTree(x, y, n: integer); // (x,y) Root bottom right
@@ -282,6 +294,10 @@ var
 begin
   lenUnit := LengthX div 100;
   SetLength(Fence, 4);
+
+  DrawWhitespace();
+  InitMovieBorders();
+
   with MainForm.imgMain.Canvas, MainForm do
   begin
     Pen.Width := 6;
@@ -516,12 +532,15 @@ begin
   begin
     Pen.Width := 2;
     Pen.Color := clBlack;
-    Brush.Color := clWhite;
+    Brush.Color := clYellow;
+
+    {
     if flag then
       Pen.Mode := pmNotXor
     else
       Pen.Mode := pmCopy;
-    Brush.Style := bsClear;
+    }
+    Brush.Style := bsSolid;
 
     PolyLine(PersonToDraw.LegLeft);
     PolyLine(PersonToDraw.LegRight);
@@ -863,11 +882,13 @@ begin
   begin
 
     Pen.Color := colour;
+    {
     if flag then
 
       Pen.Mode := pmNotXor
     else
       Pen.Mode := pmCopy;
+    }
     Brush.Color := clWhite;
     Brush.Style := bsClear;
 
@@ -1167,14 +1188,7 @@ begin
 
   InitMovieBorders;
 
-  DrawChristmasTree(600, 450, 1);
-  DrawChristmasTree(525, 550, 2);
-  DrawChristmasTree(450, 650, 2);
-  DrawChristmasTree(375, 750, 1);
-  DrawChristmasTree(300, 850, 2);
   DrawFirstBackground();
-
-  DrawSnowMan(LengthX - 2 * GlobalX, GlobalY * 4, 6);
 
   FirstPerson := ConstructorPerson(GlobalX * 10, 3 * GlobalY div 2, 14);
   PersonForthFrame(FirstPerson);
@@ -1318,12 +1332,16 @@ begin
 
     timeStarter2.Interval := 500;
     timeStarter2.Enabled := True;
-    timeStarter3.Interval := 5500;
+    timeStarter3.Interval := 5000;
     timeStarter3.Enabled := True;
 
   end
   else
   begin
+
+    DrawWhiteSpace();
+    DrawFirstBackground();
+
     if (CurrFrame < FramesCount div 3) then
       deltaSize := 1
     else
@@ -1354,8 +1372,8 @@ begin
     FirstEquip := ConstructorEquip(FirstPerson);
     EquipAnimation[CurrFrame](FirstEquip);
 
-    DrawPerson(FirstPerson);
-    DrawEquipment(FirstEquip, clRed);
+    //DrawPerson(FirstPerson);
+    //DrawEquipment(FirstEquip, clRed);
 
     Inc(CurrFrame);
   end;
@@ -1374,8 +1392,13 @@ begin
   end
   else
   begin
+
+    DrawSecondBackground();
+
     DrawPerson(FirstPerson);
     DrawEquipment(FirstEquip, clRed);
+    DrawPerson(SecondPerson);
+    DrawEquipment(SecondEquip, clGreen);
 
     if @PersonAnimation[CurrFrame] = @PersonOtherSideFirstFrame then
       deltaPoint := TPoint.Create(10, 1)
@@ -1393,8 +1416,8 @@ begin
     FirstEquip := ConstructorEquip(FirstPerson);
     EquipAnimation[CurrFrame](FirstEquip);
 
-    DrawPerson(FirstPerson);
-    DrawEquipment(FirstEquip, clRed);
+    //DrawPerson(FirstPerson);
+    //DrawEquipment(FirstEquip, clRed);
 
     Inc(CurrFrame);
   end;
@@ -1412,6 +1435,10 @@ begin
   end
   else
   begin
+
+    DrawSecondBackground();
+    DrawPerson(FirstPerson);
+    DrawEquipment(FirstEquip, clRed);
     DrawPerson(SecondPerson);
     DrawEquipment(SecondEquip, clGreen);
 
@@ -1431,8 +1458,8 @@ begin
     SecondEquip := ConstructorEquip(SecondPerson);
     EquipAnimation[CurrFrame2](SecondEquip);
 
-    DrawPerson(SecondPerson);
-    DrawEquipment(SecondEquip, clGreen);
+    //DrawPerson(SecondPerson);
+    //DrawEquipment(SecondEquip, clGreen);
 
     Inc(CurrFrame2);
   end;
